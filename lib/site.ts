@@ -178,4 +178,3 @@ export const SERVICES: Service[] = [
   },
 ];
 
-export const BUDGETS = ["Under $10k", "$10k – $25k", "$25k – $50k", "$50k – $100k", "$100k+"];

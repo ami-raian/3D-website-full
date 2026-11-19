@@ -1,8 +1,8 @@
 "use server";
 
-import { BUDGETS, SERVICES, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
-export type ContactField = "name" | "email" | "company" | "service" | "budget" | "message";
+export type ContactField = "name" | "email" | "message";
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -16,9 +16,6 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const LIMITS: Record<ContactField, number> = {
   name: 100,
   email: 200,
-  company: 120,
-  service: 60,
-  budget: 40,
   message: 5000,
 };
 
@@ -39,9 +36,6 @@ export async function sendContact(_prev: ContactState, data: FormData): Promise<
   const values = {
     name: text(data, "name"),
     email: text(data, "email"),
-    company: text(data, "company"),
-    service: text(data, "service"),
-    budget: text(data, "budget"),
     message: text(data, "message"),
   } satisfies Record<ContactField, string>;
 
@@ -52,8 +46,6 @@ export async function sendContact(_prev: ContactState, data: FormData): Promise<
   if (values.name.length < 2) errors.name = "Please tell us your name.";
   if (!EMAIL.test(values.email)) errors.email = "Please enter a valid email address.";
   if (values.message.length < 10) errors.message = "A few more words, please (at least 10 characters).";
-  if (values.service && !SERVICES.some((s) => s.title === values.service)) errors.service = "Please pick a service.";
-  if (values.budget && !BUDGETS.includes(values.budget)) errors.budget = "Please pick a budget range.";
   for (const key of Object.keys(LIMITS) as ContactField[]) {
     if (values[key].length > LIMITS[key]) errors[key] = `Please keep this under ${LIMITS[key]} characters.`;
   }
@@ -84,7 +76,7 @@ export async function sendContact(_prev: ContactState, data: FormData): Promise<
         ...values,
         submittedAt: new Date().toISOString(),
         // a one-line summary, so chat webhooks (e.g. Slack) show something readable
-        text: `New enquiry from ${values.name} <${values.email}>${values.company ? ` (${values.company})` : ""}: ${values.message}`,
+        text: `New enquiry from ${values.name} <${values.email}>: ${values.message}`,
       }),
       signal: AbortSignal.timeout(10_000),
     });

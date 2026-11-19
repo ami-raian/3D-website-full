@@ -1,11 +1,25 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, type PointerEvent } from "react";
 import { sendContact, type ContactField, type ContactState } from "@/app/actions";
-import { BUDGETS, SERVICE_GROUPS, SERVICES, type ServiceGroup } from "@/lib/site";
 
 const initial: ContactState = { status: "idle", message: "" };
 
+/** a soft light inside the card follows the cursor (CSS variables only: no React re-render) */
+const spotlight = (e: PointerEvent<HTMLElement>) => {
+  if (e.pointerType !== "mouse") return;
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+  el.style.setProperty("--my", `${e.clientY - r.top}px`);
+  el.style.setProperty("--spot", "1");
+};
+const spotlightOff = (e: PointerEvent<HTMLElement>) => e.currentTarget.style.setProperty("--spot", "0");
+
+/**
+ * Three fields: name, email, message. Labels sit inside the fields and float up when you
+ * type. Everything is checked again on the server (app/actions.ts).
+ */
 export default function ContactForm() {
   const [state, action, pending] = useActionState(sendContact, initial);
   const v = state.values ?? {};
@@ -22,7 +36,7 @@ export default function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div className="form form-done" role="status">
+      <div className="form form-done" role="status" onPointerMove={spotlight} onPointerLeave={spotlightOff}>
         <span className="done-mark" aria-hidden>
           ✓
         </span>
@@ -35,80 +49,68 @@ export default function ContactForm() {
   return (
     // after an action React resets the form to its default values, so failed submissions
     // pass their values back as defaults; the key remounts the fields with them
-    <form key={JSON.stringify(v)} className="form" action={action}>
+    <form
+      key={JSON.stringify(v)}
+      className="form"
+      action={action}
+      onPointerMove={spotlight}
+      onPointerLeave={spotlightOff}
+    >
+      <div className="form-head">
+        <span className="avail">
+          <i aria-hidden /> Available for new projects
+        </span>
+        <span>Reply &lt; 24h</span>
+      </div>
+
       <div className="form-row">
-        <label className="field">
-          <span>Name *</span>
-          <input name="name" autoComplete="name" required minLength={2} maxLength={100} defaultValue={v.name} {...a11y("name")} />
-          {errorFor("name")}
-        </label>
-        <label className="field">
-          <span>Email *</span>
+        <div className="fl">
           <input
+            id="cf-name"
+            name="name"
+            placeholder=" "
+            autoComplete="name"
+            required
+            minLength={2}
+            maxLength={100}
+            defaultValue={v.name}
+            {...a11y("name")}
+          />
+          <label htmlFor="cf-name">Your name</label>
+          {errorFor("name")}
+        </div>
+        <div className="fl">
+          <input
+            id="cf-email"
             name="email"
             type="email"
+            placeholder=" "
             autoComplete="email"
             required
             maxLength={200}
             defaultValue={v.email}
             {...a11y("email")}
           />
+          <label htmlFor="cf-email">Email</label>
           {errorFor("email")}
-        </label>
+        </div>
       </div>
 
-      <label className="field">
-        <span>Company</span>
-        <input name="company" autoComplete="organization" maxLength={120} defaultValue={v.company} {...a11y("company")} />
-        {errorFor("company")}
-      </label>
-
-      <div className="form-row">
-        <label className="field">
-          <span>Service</span>
-          <select name="service" defaultValue={v.service ?? ""} {...a11y("service")}>
-            <option value="">Not sure yet</option>
-            {(Object.keys(SERVICE_GROUPS) as ServiceGroup[]).map((g) => (
-              <optgroup key={g} label={SERVICE_GROUPS[g].label}>
-                {SERVICES.filter((s) => s.group === g).map((s) => (
-                  <option key={s.title}>{s.title}</option>
-                ))}
-              </optgroup>
-            ))}
-            <optgroup label="More services">
-              {SERVICES.filter((s) => !s.group).map((s) => (
-                <option key={s.title}>{s.title}</option>
-              ))}
-            </optgroup>
-          </select>
-          {errorFor("service")}
-        </label>
-        <label className="field">
-          <span>Budget</span>
-          <select name="budget" defaultValue={v.budget ?? ""} {...a11y("budget")}>
-            <option value="">Prefer not to say</option>
-            {BUDGETS.map((b) => (
-              <option key={b}>{b}</option>
-            ))}
-          </select>
-          {errorFor("budget")}
-        </label>
-      </div>
-
-      <label className="field">
-        <span>Project details *</span>
+      <div className="fl">
         <textarea
+          id="cf-message"
           name="message"
+          placeholder=" "
           rows={5}
           required
           minLength={10}
           maxLength={5000}
-          placeholder="What are you building, and where are you stuck?"
           defaultValue={v.message}
           {...a11y("message")}
         />
+        <label htmlFor="cf-message">Tell us about your project</label>
         {errorFor("message")}
-      </label>
+      </div>
 
       {/* spam trap: hidden from people and screen readers, bots tend to fill it in */}
       <div className="hp" aria-hidden>
@@ -118,15 +120,13 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <div className="form-foot">
-        <p className={`form-msg${state.status === "error" ? " is-error" : ""}`} aria-live="polite">
-          {state.status === "error" ? state.message : "We reply within one business day."}
-        </p>
-        <button className="btn" type="submit" disabled={pending}>
-          <span>{pending ? "Sending…" : "Send message"}</span>
-          <b aria-hidden>→</b>
-        </button>
-      </div>
+      <button className="send" type="submit" disabled={pending}>
+        <span>{pending ? "Sending…" : "Send message"}</span>
+        <b aria-hidden>→</b>
+      </button>
+      <p className={`form-msg${state.status === "error" ? " is-error" : ""}`} aria-live="polite">
+        {state.status === "error" ? state.message : "Your details stay with us. No newsletters, no spam."}
+      </p>
     </form>
   );
 }
