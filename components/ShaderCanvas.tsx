@@ -118,10 +118,9 @@ export default function ShaderCanvas() {
     const off = engine.onTick((_t, dt) => {
       if (lost || document.hidden) return;
 
-      // while the hero backdrop fully covers the screen, skip the GPU work entirely
-      // (it starts fading at 84% of the hero, so the world is already live by then)
+      // while the solid hero still fills the whole screen, the world is hidden: skip the GPU work
       const hero = engine.find("hero");
-      if (shown && hero && engine.y < hero.top + (hero.height - engine.vh) * 0.8) return;
+      if (shown && hero && engine.y + engine.vh <= hero.top + hero.height) return;
 
       // adapt resolution every 30 frames
       acc += dt;

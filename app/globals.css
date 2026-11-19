@@ -348,84 +348,20 @@ em,
 
 /* ---------- hero ---------- */
 
+/* one static screen on the plain page colour; it covers the WebGL world until you scroll past */
 .hero {
-  /* tall on purpose: more scroll per frame = a slower, calmer reel. Taller means slower.
-     --e: title exit (first ~18% of the scroll) · --out: lens flies off, world fades in (last 16%) */
-  --e: clamp(0, calc(var(--p) * 5.4), 1);
-  --out: clamp(0, calc((var(--p) - 0.84) * 6.25), 1);
   position: relative;
-  height: 560vh;
-}
-.hero-sticky {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: clip;
-  perspective: 1400px;
-}
-/* plain page colour behind the lens; full-bleed, so it has no edges. It fades out at
-   the end to reveal the live WebGL world (which starts rendering just before) */
-.hero-sticky::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+  display: flex;
+  min-height: 100svh;
   background: var(--bg);
-  opacity: calc(1 - var(--out));
-}
-
-/* the showreel (image sequence): transparent frames, only the lens is drawn */
-/* at the end the lens tilts back, flies away and fades out */
-.seq {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  opacity: calc(1 - var(--out) * var(--out));
-  transform: translate3d(0, calc(var(--out) * -6vh), calc(var(--out) * -700px)) rotateX(calc(var(--out) * 14deg));
-  will-change: transform, opacity;
-  /* frame shape and native width, from lib/sequence.ts (set inline by HeroSequence) */
-  --ar: var(--ar-d);
-  --fw: var(--fw-d);
-}
-@media (max-aspect-ratio: 17/20) {
-  .seq {
-    --ar: var(--ar-m);
-    --fw: var(--fw-m);
-  }
-}
-/* the whole frame, centred ("contain"): it has no background, so nothing needs cropping,
-   and it never grows past its own pixel size, so it stays sharp */
-.seq img,
-.seq canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  width: min(100%, var(--fw), calc(100svh * var(--ar)));
-  height: auto;
-  aspect-ratio: var(--ar);
-  translate: -50% -50%;
-}
-.hero-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(7, 7, 11, 0.65) 0%, rgba(7, 7, 11, 0) 30%),
-    linear-gradient(0deg, rgba(7, 7, 11, 0.96) 0%, rgba(7, 7, 11, 0.5) 42%, rgba(7, 7, 11, 0) 72%),
-    linear-gradient(90deg, rgba(7, 7, 11, 0.75) 0%, rgba(7, 7, 11, 0) 68%),
-    rgba(7, 7, 11, 0.2);
-  opacity: calc((1 - var(--e) * 0.6) * (1 - var(--out)));
 }
 .hero-inner {
-  position: absolute;
-  inset: 0;
+  position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-between;
   padding: calc(var(--pad) + 4.2rem) var(--pad) var(--pad);
-  transform-origin: 50% 0%;
-  transform: translate3d(0, calc(var(--e) * -12vh), calc(var(--e) * -300px)) rotateX(calc(var(--e) * 18deg));
-  opacity: calc(1 - var(--e) * 1.4);
-  will-change: transform, opacity;
 }
 .hero-meta {
   display: flex;
@@ -447,26 +383,15 @@ em,
 }
 .line {
   display: block;
-  overflow: clip;
   padding: 0.05em 0.1em 0.07em 0;
   margin-bottom: -0.1em;
   white-space: nowrap;
-  perspective: 800px;
-}
-.ch {
-  display: inline-block;
-  transform-origin: 50% 100%;
-  animation: chIn 1.4s var(--ease) both;
-  animation-delay: calc(var(--i) * 34ms + 150ms);
 }
 .serif-word {
+  display: inline-block;
   padding-right: 0.06em;
   font-size: 1.1em;
   letter-spacing: -0.02em;
-}
-.reveal {
-  animation: fadeUp 1.4s var(--ease) both;
-  animation-delay: 0.9s;
 }
 .hero-foot {
   display: flex;
@@ -479,8 +404,7 @@ em,
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
   color: var(--muted);
 }
-/* lens beside the text (landscape render): keep the title and intro in the middle, level
-   with the lens, instead of down at the bottom of the screen */
+/* wide screens: keep the title and intro in the middle instead of down at the bottom */
 @media not all and (max-aspect-ratio: 17/20) {
   .hero-foot {
     margin-bottom: auto;
@@ -509,18 +433,9 @@ em,
   text-transform: uppercase;
 }
 .cue-line {
-  position: relative;
   width: 64px;
   height: 1px;
-  overflow: hidden;
-  background: var(--faint);
-}
-.cue-line::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--fg);
-  animation: cue 2.2s var(--ease) infinite;
+  background: var(--muted);
 }
 
 /* ---------- film (pinned, scroll-scrubbed) ---------- */
@@ -1314,27 +1229,6 @@ html:not(.has-cursor) .cursor-ring {
 
 /* ---------- keyframes ---------- */
 
-@keyframes chIn {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 105%, 0) rotateX(-80deg);
-  }
-}
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 24px, 0);
-  }
-}
-@keyframes cue {
-  0% {
-    transform: translateX(-100%);
-  }
-  60%,
-  100% {
-    transform: translateX(100%);
-  }
-}
 @keyframes blink {
   50% {
     opacity: 0.2;
@@ -1408,9 +1302,6 @@ html:not(.has-cursor) .cursor-ring {
 @media (max-width: 768px) {
   .hide-sm {
     display: none;
-  }
-  .hero {
-    height: 480vh;
   }
   .hero-title {
     font-size: clamp(2rem, min(11.5vw, 7.4svh), 5.6rem);
