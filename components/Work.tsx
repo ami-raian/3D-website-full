@@ -26,7 +26,7 @@ export default function Work() {
 
         <div className="work-stage">
           {PROJECTS.map((p, i) => (
-            <article key={p.name} className="card" style={vars({ "--i": i, "--h": p.h })} data-cursor>
+            <article key={p.name} className="card" style={vars({ "--i": i, "--h": p.h })}>
               <div className={`art art-${p.art}`} aria-hidden>
                 <span />
                 <span />

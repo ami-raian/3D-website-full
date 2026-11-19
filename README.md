@@ -1,8 +1,8 @@
-# Lumen: a lightweight scroll-driven 3D website
+# Lumen: a lightweight scroll-driven website
 
-Next.js 16 (App Router) + Lenis. The hero is a static title screen on a static gradient
-backdrop; the sections after it animate with plain CSS driven by scroll. No WebGL, videos or
-image sequences to download.
+Next.js 16 (App Router) + Lenis. Three scroll-driven sections on a static gradient backdrop:
+a word-by-word text reveal, a horizontal 3D gallery of projects, and an endless marquee that
+moves with your scroll speed. No animation library, no WebGL, no videos.
 
 ```bash
 npm install
@@ -16,11 +16,12 @@ npm run build && npm start
 | --- | --- |
 | `lib/engine.ts` | One `requestAnimationFrame` loop for everything. Steps Lenis, measures sections only on resize, and writes a `--p` (0 to 1) CSS variable on every tracked section. |
 | `components/Track.tsx` | Wrap any section to give it a live `--p`. Modes: `view`, `pin` (sticky sections), `enter`, `exit`. |
-| `app/globals.css` | Nearly all animation is plain CSS `calc()` on `--p`. No animation library. |
+| `components/SmoothScroll.tsx` | Starts Lenis and the shared loop. |
+| `app/globals.css` | Nearly all animation is plain CSS `calc()` on `--p`. |
 
 ## Customise
 
-- **Text and content**: `components/Hero.tsx`, `Story.tsx`, `Work.tsx` (projects), `Process.tsx`, `Footer.tsx`
+- **Text reveal** ("Why it feels so light"): `components/Story.tsx`
+- **Project gallery** ("Worlds we've built"): `PROJECTS` in `components/Work.tsx`
+- **Marquee words**: `ITEMS` in `components/Marquee.tsx`
 - **Colours**: `:root` and `.backdrop` in `app/globals.css`
-- **Mobile menu**: `components/Nav.tsx`. Below 900 px it replaces the nav links with a full-screen menu.
-# 3D-website
