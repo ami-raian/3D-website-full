@@ -12,8 +12,9 @@ const serif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Lumen | Real-time 3D studio",
-  description: "A lightweight, scroll-driven 3D experience.",
+  title: "Lumen Studio | Software engineering",
+  description:
+    "Lumen Studio builds Shopify and e-commerce stores from A to Z, hires and manages remote teams, and engineers web, mobile and cloud software.",
 };
 
 export const viewport: Viewport = {
@@ -24,7 +25,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${display.variable} ${serif.variable}`}>
       {/* browser extensions (Grammarly, ColorZilla…) add attributes to <body>; don't flag that as a hydration error */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {/* scroll reveals start hidden and are shown by the scroll engine; without JavaScript, show them */}
+        <noscript>
+          <style>{".rise{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,6 +1,10 @@
-import Marquee from "@/components/Marquee";
+import About from "@/components/About";
+import Contact from "@/components/Contact";
+import Nav from "@/components/Nav";
+import Services from "@/components/Services";
 import SmoothScroll from "@/components/SmoothScroll";
 import Story from "@/components/Story";
+import Technologies from "@/components/Technologies";
 import Work from "@/components/Work";
 
 export default function Home() {
@@ -8,10 +12,14 @@ export default function Home() {
     <>
       <div className="backdrop" aria-hidden />
       <SmoothScroll />
-      <main className="main">
+      <Nav />
+      <main id="top" className="main">
+        <About />
         <Story />
+        <Services />
         <Work />
-        <Marquee />
+        <Technologies />
+        <Contact />
       </main>
     </>
   );

@@ -2,7 +2,7 @@
  * A tiny scroll engine — one requestAnimationFrame loop for the whole site.
  *
  * - Lenis (if enabled) is stepped from this loop, so smooth-scroll, scroll
- *   tracking and the WebGL render all happen in the same frame.
+ *   tracking and every scroll-driven animation happen in the same frame.
  * - Element positions are measured only on resize, never per frame, so the
  *   loop does no layout reads while scrolling.
  * - Each tracked element gets a `--p` CSS variable (0 → 1). Most animations

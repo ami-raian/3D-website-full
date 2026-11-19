@@ -2,16 +2,17 @@ import Track from "./Track";
 import { vars } from "@/lib/css";
 
 const PROJECTS = [
-  { name: "Aether", kind: "Immersive product launch", year: "2026", art: "orb", h: 258 },
-  { name: "Monolith", kind: "Architecture visualiser", year: "2025", art: "stack", h: 200 },
-  { name: "Halo", kind: "Audio-reactive identity", year: "2025", art: "rings", h: 320 },
-  { name: "Drift", kind: "Generative brand system", year: "2024", art: "waves", h: 170 },
-  { name: "Prism", kind: "Spatial e-commerce", year: "2024", art: "prism", h: 28 },
+  { name: "Aether", kind: "Fintech platform, web and mobile", year: "2026", art: "orb", h: 258 },
+  { name: "Monolith", kind: "Logistics ERP", year: "2025", art: "stack", h: 200 },
+  { name: "Halo", kind: "Telehealth app", year: "2025", art: "rings", h: 320 },
+  { name: "Drift", kind: "AI analytics suite", year: "2024", art: "waves", h: 170 },
+  { name: "Prism", kind: "Shopify Plus store, A to Z", year: "2024", art: "prism", h: 28 },
 ];
 
+/** Projects: a pinned, horizontally scrolling 3D gallery. */
 export default function Work() {
   return (
-    <Track mode="pin" name="work" id="work" className="work" style={vars({ "--cards": PROJECTS.length })}>
+    <Track mode="pin" name="projects" id="projects" className="work" style={vars({ "--cards": PROJECTS.length })}>
       <div className="work-sticky">
         <div className="work-ghost" aria-hidden>
           Selected work · Selected work ·

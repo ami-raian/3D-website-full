@@ -3,10 +3,8 @@
 import { useEffect, useRef } from "react";
 import { engine } from "@/lib/engine";
 
-const ITEMS = ["Real-time 3D", "Motion design", "WebGL", "Interaction", "Creative code", "Shaders"];
-
 /** Endless ticker that speeds up and leans with your scroll velocity. Pauses when off screen. */
-export default function Marquee() {
+export default function Marquee({ items }: { items: string[] }) {
   const wrap = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
@@ -39,14 +37,14 @@ export default function Marquee() {
     };
   }, []);
 
-  const row = ITEMS.map((s) => (
+  const row = items.map((s) => (
     <span key={s}>
       {s} <i aria-hidden>✦</i>
     </span>
   ));
 
   return (
-    <div ref={wrap} className="marquee" aria-label={ITEMS.join(", ")}>
+    <div ref={wrap} className="marquee" aria-label={items.join(", ")}>
       <div ref={track} className="marquee-track" aria-hidden>
         {row}
         {row}

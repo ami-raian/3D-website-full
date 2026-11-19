@@ -2,7 +2,7 @@ import Track from "./Track";
 import { vars } from "@/lib/css";
 
 const TEXT =
-  "The film you just watched was rendered *live* on your own device. Even the opening reel is just a few tiny frames, streamed on demand. No video files. No *hundreds* of megabytes to download. Just math, light and a few kilobytes of code, so it opens in a *blink* and scrolls like *silk.*";
+  "Every product we ship is built to feel *light.* It opens in a *blink* on a mid-range phone, makes sense on day one and stays easy to change years later. No bloated stacks. No *black-box* code. Just careful engineering, honest design and the right few tools, so your software runs like *silk.*";
 
 export default function Story() {
   const words = TEXT.split(" ");
