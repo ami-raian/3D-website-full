@@ -12,6 +12,12 @@
   --iri: linear-gradient(100deg, #8fd3ff 0%, #b79cff 35%, #ff9ccf 68%, #ffc48a 100%);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --pad: clamp(1.25rem, 4vw, 3.5rem);
+  /* content is never wider than --max; padding-inline: var(--gutter) centres it.
+     (the % resolves against the width of the element that uses it, so it works anywhere full-width) */
+  --max: 1200px;
+  --gutter: max(var(--pad), calc((100% - var(--max)) / 2));
+  /* the one gap between sections */
+  --space: clamp(4rem, 10vh, 7rem);
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   /* Syne gets wider as it gets bolder; 600 keeps headlines strong without shouting */
   --display: 600;
@@ -107,7 +113,7 @@ em {
 }
 
 .h2 {
-  font-size: clamp(2.1rem, 4.4vw, 4.6rem);
+  font-size: clamp(1.9rem, 3.3vw, 3.4rem);
   font-weight: var(--display);
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -159,7 +165,7 @@ em {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.2rem var(--pad);
+  padding: 1.2rem var(--gutter);
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   mix-blend-mode: difference;
@@ -346,19 +352,18 @@ em {
 .section,
 .section-inner {
   position: relative;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding-inline: var(--pad);
+  padding-inline: var(--gutter);
 }
+/* each section only spaces itself from the one above, so gaps never add up */
 .section {
-  padding-block: 18vh 14vh;
+  padding-top: var(--space);
 }
 .sec-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
   align-items: end;
-  gap: 1.4rem 4rem;
-  margin-bottom: 9vh;
+  gap: 1.2rem 4rem;
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
 }
 .sec-head .kicker {
   grid-column: 1 / -1;
@@ -369,16 +374,17 @@ em {
   color: var(--muted);
 }
 
-/* scroll reveal: put .rise inside (or on) a <Track mode="enter">; --i staggers siblings */
+/* scroll reveal: put .rise inside (or on) a <Track mode="enter">; --i staggers siblings.
+   Done by the time the element is a quarter of the way up the screen, so nothing looks missing */
 .rise {
-  --r: clamp(0, calc(var(--p) * 3 - var(--i, 0) * 0.18 - 0.1), 1);
+  --r: clamp(0, calc(var(--p) * 4.5 - var(--i, 0) * 0.2 - 0.1), 1);
   opacity: var(--r);
-  transform: translate3d(0, calc((1 - var(--r)) * 60px), 0);
+  transform: translate3d(0, calc((1 - var(--r)) * 40px), 0);
 }
 /* the same, tipping forward out of the page */
 .rise-3d {
-  transform: translate3d(0, calc((1 - var(--r)) * 120px), calc((1 - var(--r)) * -240px))
-    rotateX(calc((1 - var(--r)) * 24deg));
+  transform: translate3d(0, calc((1 - var(--r)) * 70px), calc((1 - var(--r)) * -140px))
+    rotateX(calc((1 - var(--r)) * 18deg));
   transform-origin: 50% 100%;
 }
 
@@ -437,18 +443,15 @@ em {
 
 /* ---------- about (first screen) ---------- */
 
+/* sized by its content (not forced to a full screen), clear of the fixed nav */
 .about-inner {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: clamp(1.4rem, 4vh, 2.6rem);
-  max-width: 1440px;
-  min-height: 100svh;
-  margin: 0 auto;
-  padding: calc(var(--pad) + 5rem) var(--pad) clamp(1.5rem, 4vh, 2.5rem);
+  gap: clamp(1.2rem, 3vh, 2rem);
+  padding: calc(5rem + clamp(1.5rem, 7vh, 4.5rem)) var(--gutter) 0;
 }
 .about-title {
-  font-size: clamp(2.4rem, min(7vw, 12svh), 7.6rem);
+  font-size: clamp(2.2rem, min(5.4vw, 10svh), 5.6rem);
   font-weight: var(--display);
   line-height: 0.92;
   letter-spacing: -0.045em;
@@ -480,11 +483,11 @@ em {
   border-top: 1px solid var(--line);
 }
 .stat {
-  padding: 1.4rem 1.5rem 0 0;
+  padding: 1.2rem 1.5rem 0 0;
 }
 .stat strong {
   display: block;
-  font-size: clamp(2rem, 3.4vw, 3.6rem);
+  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
   font-variant-numeric: tabular-nums;
   font-weight: var(--display);
   line-height: 1;
@@ -499,25 +502,26 @@ em {
 
 /* ---------- story (word-by-word reveal) ---------- */
 
+/* taller = more scroll per word. The pinned box is shorter than the screen and held in its
+   middle, so there's no half-screen of empty space above and below the paragraph */
 .story {
+  --sh: min(100svh, 27rem);
   position: relative;
-  height: 280vh;
+  height: 190vh;
 }
 .story-sticky {
   position: sticky;
-  top: 0;
+  top: calc((100svh - var(--sh)) / 2);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2rem;
-  max-width: 1400px;
-  height: 100svh;
-  margin: 0 auto;
-  padding: 0 var(--pad);
+  gap: 1.6rem;
+  height: var(--sh);
+  padding: 0 var(--gutter);
 }
 .story-text {
   max-width: 25em;
-  font-size: clamp(1.35rem, 2.8vw, 2.9rem);
+  font-size: clamp(1.3rem, 2.4vw, 2.4rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -553,9 +557,9 @@ em {
   position: relative;
   height: 100%;
   overflow: hidden;
-  padding: clamp(1.5rem, 2.4vw, 2.2rem);
+  padding: clamp(1.3rem, 1.8vw, 1.8rem);
   border: 1px solid var(--line);
-  border-radius: 24px;
+  border-radius: 22px;
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.012)),
     rgba(10, 10, 16, 0.6);
@@ -599,7 +603,7 @@ em {
   gap: 0.5rem;
 }
 .tilt .tags {
-  margin-top: 1.8rem;
+  margin-top: 1.3rem;
 }
 .tags li {
   padding: 0.35rem 0.8rem;
@@ -611,14 +615,14 @@ em {
 
 /* service blocks (Shopify, e-commerce & remote teams, more): a small label, then the cards */
 .svc-group + .svc-group {
-  margin-top: 12vh;
+  margin-top: clamp(2.5rem, 6vh, 4rem);
 }
 .svc-group-head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.6rem 1.6rem;
-  margin-bottom: 2.4rem;
+  gap: 0.5rem 1.6rem;
+  margin-bottom: 1.4rem;
 }
 .svc-group-text {
   max-width: 62ch;
@@ -634,13 +638,13 @@ em {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.1rem;
 }
 .svc-top .svc-icon {
   margin-bottom: 0;
 }
 .svc-core h3 {
-  font-size: clamp(1.4rem, 1.9vw, 2rem);
+  font-size: clamp(1.3rem, 1.7vw, 1.75rem);
 }
 .svc-core .tilt > p {
   max-width: 46ch;
@@ -648,15 +652,15 @@ em {
 .svc-points {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 0.6rem 1.6rem;
-  margin-top: 1.8rem;
-  padding-top: 1.6rem;
+  gap: 0.5rem 1.6rem;
+  margin-top: 1.3rem;
+  padding-top: 1.2rem;
   border-top: 1px solid var(--line);
 }
 .svc-points li {
   position: relative;
   padding-left: 1.4rem;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.4;
   color: rgba(242, 240, 236, 0.85);
 }
@@ -673,12 +677,12 @@ em {
 
 /* more services: compact cards */
 .svc-more .tilt {
-  padding: clamp(1.3rem, 2vw, 1.8rem);
+  padding: clamp(1.2rem, 1.6vw, 1.5rem);
 }
 .svc-more .svc-icon {
-  width: 44px;
-  height: 44px;
-  margin-bottom: 1.4rem;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1rem;
 }
 .svc-more h3 {
   font-size: clamp(1.15rem, 1.4vw, 1.4rem);
@@ -692,9 +696,9 @@ em {
   position: relative;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 2.4rem;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.4rem;
 }
 .svc-icon span {
   position: absolute;
@@ -889,13 +893,14 @@ em {
 
 /* ---------- work (horizontal 3D gallery) ---------- */
 
+/* taller = slower gallery */
 .work {
-  --cw: 30;
-  --gap: 6;
+  --cw: 27;
+  --gap: 5;
   --step: calc(var(--cw) + var(--gap));
   --travel: calc((var(--cards) - 1) * var(--step));
   position: relative;
-  height: 440vh;
+  height: 280vh;
 }
 .work-sticky {
   position: sticky;
@@ -925,8 +930,8 @@ em {
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: calc(4.6rem + 2vh) var(--pad) 0;
+  gap: 0.8rem;
+  padding: calc(4.6rem + 2vh) var(--gutter) 0;
 }
 .work-head .h2 {
   font-size: clamp(1.9rem, 3.4vw, 3.5rem);
@@ -942,7 +947,7 @@ em {
   top: 50%;
   left: 0;
   width: calc(var(--cw) * 1vw);
-  height: min(54svh, calc(var(--cw) * 1.25vw));
+  height: min(50svh, calc(var(--cw) * 1.25vw));
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 22px;
@@ -1126,8 +1131,8 @@ em {
 }
 .work-progress {
   position: absolute;
-  left: var(--pad);
-  right: var(--pad);
+  left: var(--gutter);
+  right: var(--gutter);
   bottom: 2.4rem;
   height: 1px;
   background: var(--faint);
@@ -1173,20 +1178,20 @@ em {
 
 .tech {
   position: relative;
-  padding-block: 18vh 14vh;
+  padding-top: var(--space);
 }
 .tech .marquee {
-  margin-bottom: 8vh;
+  margin-bottom: clamp(2rem, 5vh, 3rem);
 }
 .tech-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1rem, 2vw, 1.75rem);
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
 }
 .tech-card {
-  padding: clamp(1.4rem, 2.2vw, 2rem);
+  padding: clamp(1.1rem, 1.5vw, 1.4rem);
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: 18px;
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
     rgba(10, 10, 16, 0.55);
@@ -1200,9 +1205,9 @@ em {
 .tech-card h3 {
   display: flex;
   align-items: baseline;
-  gap: 0.8rem;
-  margin-bottom: 1.4rem;
-  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
   font-weight: var(--display);
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -1219,14 +1224,14 @@ em {
 
 .contact {
   position: relative;
-  padding-top: 18vh;
+  padding-top: var(--space);
 }
 .contact-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 31rem);
   align-items: start;
-  gap: clamp(2.5rem, 6vw, 6rem);
-  padding-bottom: 14vh;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: var(--space);
 }
 .contact-info {
   display: flex;
@@ -1234,14 +1239,14 @@ em {
   gap: 1.6rem;
 }
 .cta-title {
-  font-size: clamp(2.1rem, 4.8vw, 5.6rem);
+  font-size: clamp(2rem, 3.8vw, 4.2rem);
   font-weight: var(--display);
   line-height: 0.92;
   letter-spacing: -0.045em;
   text-transform: uppercase;
   /* grows into place from its bottom-left corner, so it never overlaps the text below */
-  opacity: clamp(0, calc(var(--p) * 1.6 - 0.2), 1);
-  transform: scale(calc(0.86 + var(--p) * 0.14));
+  opacity: clamp(0, calc(var(--p) * 3 - 0.2), 1);
+  transform: scale(calc(0.9 + min(var(--p) * 1.6, 1) * 0.1));
   transform-origin: 0 100%;
 }
 .cta-title em {
@@ -1425,7 +1430,7 @@ em {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.6rem var(--pad);
+  padding: 1.4rem var(--gutter);
   border-top: 1px solid var(--line);
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -1505,17 +1510,14 @@ em {
   }
 }
 
-/* below this, three large service cards get cramped: stack them, and give each list two columns */
-@media (max-width: 1100px) {
+@media (max-width: 900px) {
+  /* three large service cards no longer fit side by side: stack them, two-column lists */
   .svc-grid.svc-core {
     grid-template-columns: 1fr;
   }
   .svc-points {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
-
-@media (max-width: 900px) {
   .nav-links {
     display: none;
   }
@@ -1538,6 +1540,8 @@ em {
   .work {
     --cw: 74;
     --gap: 8;
+    /* wide cards travel further, so give them a little more scroll */
+    height: 320vh;
   }
   .card {
     height: min(58svh, 98vw);
@@ -1549,10 +1553,10 @@ em {
     display: none;
   }
   .story {
-    height: 240vh;
+    height: 170vh;
   }
   .story-text {
-    font-size: clamp(1.35rem, min(5.2vw, 6svh), 2.3rem);
+    font-size: clamp(1.25rem, min(5vw, 5.6svh), 2rem);
   }
   .foot-bar {
     flex-wrap: wrap;
@@ -1568,6 +1572,23 @@ em {
   }
   .about-title {
     font-size: clamp(2.2rem, min(12.5vw, 8svh), 4rem);
+  }
+  /* narrow screens wrap the paragraph onto more lines, so its pinned box is taller */
+  .story {
+    --sh: min(100svh, 31rem);
+  }
+  /* compact service cards: icon beside the text instead of above it */
+  .svc-more .tilt {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 1rem;
+  }
+  .svc-more .svc-icon {
+    grid-row: span 2;
+    margin: 0;
+  }
+  .svc-more h3 {
+    margin-top: 0.6rem;
   }
   .contact-list div {
     grid-template-columns: 1fr;
