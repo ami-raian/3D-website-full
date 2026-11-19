@@ -1,5 +1,6 @@
 import Counter from "./Counter";
 import Track from "./Track";
+import Hero3D from "./hero3d/Hero3D";
 import { vars } from "@/lib/css";
 import { SITE } from "@/lib/site";
 
@@ -14,6 +15,7 @@ const STATS = [
 export default function About() {
   return (
     <Track name="about" id="about" className="about">
+      <Hero3D />
       <div className="about-inner">
         <p className="kicker">( {SITE.name} · Software engineering )</p>
 

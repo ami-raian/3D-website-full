@@ -16,6 +16,7 @@ npm run build && npm start
 | --- | --- | --- |
 | Navigation | `components/Nav.tsx` | Fixed bar with scroll progress and the current section underlined; full-screen menu below 900 px. |
 | About | `components/About.tsx`, `components/Story.tsx` | First screen with stats (`Counter.tsx`), then the word-by-word "Why it feels so light" statement. |
+| Hero 3D | `components/hero3d/*.jsx` | An exploded-view processor (circuit board, chrome core, glass top) on the right of the About screen. See below. |
 | Services | `components/Services.tsx` | Three blocks: "Shopify, A to Z" (setup, development, growth & care), "E-commerce & remote teams" (e-commerce, remote team management, remote hiring), then compact cards for everything else. All come from `SERVICES` in `lib/site.ts`: `group: "shopify"` or `group: "core"` puts a service in a block of large cards, no group makes it a compact card. |
 | Projects | `components/Work.tsx`, `assets/projects/` | Pinned, horizontally scrolling 3D gallery of case studies with photos. Edit `PROJECTS`; photo credits are in `assets/projects/CREDITS.md`. |
 | Technologies | `components/Technologies.tsx`, `components/StackTabs.tsx` | Marquee (`Marquee.tsx`) that reacts to scroll speed, then tabs per area with logo tiles (logos from the `simple-icons` package). Edit `STACK`. |
@@ -51,3 +52,20 @@ build asks visitors to email the address in `lib/site.ts` instead.
 - **Copy and company details**: `lib/site.ts`, plus the text inside each section component
 - **Colours**: `:root` and `.backdrop` in `app/globals.css`
 - **Project gallery speed**: `.work { height: 440vh }` in `globals.css`. Taller means slower.
+
+## Hero 3D (components/hero3d)
+
+Written in JavaScript/JSX with three.js, @react-three/fiber and @react-three/drei
+(`allowJs` is on in `tsconfig.json` so the TypeScript pages can import it).
+
+| File | What it does |
+| --- | --- |
+| `Hero3D.jsx` | The box on the right of the hero. Loads the scene only once the page is idle, skips it without WebGL or with Data Saver, and fades it in on its first frame. |
+| `Scene.jsx` | Canvas, camera rig, cursor light, studio lighting (built in code, no HDR download), shared motion state, background shader compile, pause when off screen. |
+| `ChipCore.jsx` | The processor: board with a generated circuit (pulses run in to the core), pins, iridescent chrome core with etched marking, glass top, light links between the layers. |
+| `LightFibres.jsx` | Data cables with travelling light pulses. |
+| `Dust.jsx` | Atmospheric particles. |
+
+Motion: the layers assemble on load, breathe when idle, tilt and spread toward the cursor, and
+fly apart as the hero scrolls away. Reduced motion shows one still frame; touch screens and
+narrow windows get a lighter version (no glass top, fewer particles, lower resolution).

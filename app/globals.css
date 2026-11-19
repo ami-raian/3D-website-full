@@ -443,6 +443,48 @@ em {
 
 /* ---------- about (first screen) ---------- */
 
+/* the 3D centrepiece (components/hero3d) sits behind the hero content on the right.
+   It is absolutely positioned, so it never changes the layout, and it ignores the pointer
+   so the buttons above it work as before (it follows the cursor through a window listener). */
+.about {
+  position: relative;
+  overflow: clip;
+}
+.about-inner {
+  position: relative;
+  z-index: 1;
+}
+.hero3d {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(54vw, 900px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+}
+.hero3d.is-ready {
+  opacity: 1;
+}
+/* below 900px there is no empty right side: the scene peeks in from the top-right corner
+   behind the headline, dimmed and fading out downwards so the text stays easy to read */
+@media (max-width: 900px) {
+  .hero3d {
+    top: 0;
+    right: -30vw;
+    bottom: auto;
+    width: 100vw;
+    height: min(60svh, 30rem);
+    -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent 92%);
+    mask-image: linear-gradient(180deg, #000 40%, transparent 92%);
+  }
+  .hero3d.is-ready {
+    opacity: 0.42;
+  }
+}
+
 /* sized by its content (not forced to a full screen), clear of the fixed nav */
 .about-inner {
   display: flex;
