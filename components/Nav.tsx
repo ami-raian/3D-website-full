@@ -77,7 +77,7 @@ export default function Nav() {
       <nav className="nav" aria-label="Main">
         <a href="#top" className="logo" onClick={open ? go : undefined}>
           <span className="logo-mark" aria-hidden />
-          LUMEN
+          {SITE.name.toUpperCase()}
         </a>
         <div className="nav-links">
           {BAR_LINKS.map((s) => (

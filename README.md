@@ -1,4 +1,4 @@
-# Lumen Studio: single-page software company site
+# Ucchas: company website
 
 Next.js 16 (App Router) + Lenis smooth scrolling. One page with section navigation: About, Services,
 Projects, Technologies and Contact, on a static gradient backdrop. Animations are scroll-driven

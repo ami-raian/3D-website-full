@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LUMEN · all animation is driven by one CSS variable per section: --p (0 → 1)
+   UCCHAS · all animation is driven by one CSS variable per section: --p (0 → 1)
    written by lib/engine.ts. Everything below is plain CSS on top of that.
    ========================================================================== */
 
@@ -1844,6 +1844,14 @@ em {
 @media (orientation: landscape) and (max-height: 520px) {
   .nav {
     padding-block: 0.8rem;
+  }
+  /* the hero is taller than the screen here: keep the chip in the upper right, beside the
+     headline, clear of the intro paragraph below it */
+  .hero3d {
+    right: 0;
+    bottom: auto;
+    width: 44vw;
+    height: 74svh;
   }
   .menu {
     padding-top: 4.2rem;

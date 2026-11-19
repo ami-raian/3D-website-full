@@ -11,7 +11,7 @@ export default function Contact() {
           <p className="kicker">( Contact )</p>
           <h2 className="cta-title">
             Let&apos;s build <br />
-            something <em>luminous.</em>
+            something <em>remarkable.</em>
           </h2>
           <p className="lead">
             Tell us what you&apos;re building. We&apos;ll come back with questions, a rough plan and an honest

@@ -12,9 +12,9 @@ const serif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Lumen Studio | Software engineering",
+  title: "Ucchas | Shopify, e-commerce & web development",
   description:
-    "Lumen Studio builds Shopify and e-commerce stores from A to Z, hires and manages remote teams, and engineers web, mobile and cloud software.",
+    "Ucchas builds Shopify and e-commerce stores from A to Z, hires and manages remote teams, and engineers web, mobile and cloud software.",
 };
 
 export const viewport: Viewport = {

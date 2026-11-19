@@ -4,7 +4,7 @@
  */
 
 export const SITE = {
-  name: "Lumen Studio",
+  name: "Ucchas",
   email: "hello@example.com",
 };
 
