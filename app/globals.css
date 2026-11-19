@@ -957,19 +957,27 @@ em {
 
 /* taller = slower gallery */
 .work {
-  --cw: 27;
-  --gap: 5;
+  /* card width (vw), gap between cards (vw) and card height */
+  --cw: 22;
+  --gap: 3.5;
+  --ch: min(44svh, calc(var(--cw) * 1.3vw));
   --step: calc(var(--cw) + var(--gap));
   --travel: calc((var(--cards) - 1) * var(--step));
+  /* the strip is a loop this long: after the last card the first comes round again */
+  --loop: calc(var(--cards) * var(--step));
   position: relative;
   height: 280vh;
 }
+/* heading, cards and progress line stay together as one group, centred on screen below the nav */
 .work-sticky {
   position: sticky;
   top: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.4rem, 4vh, 2.4rem);
   height: 100svh;
+  padding-top: 4.6rem;
   overflow: clip;
 }
 .work-ghost {
@@ -993,23 +1001,27 @@ em {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding: calc(4.6rem + 2vh) var(--gutter) 0;
+  padding: 0 var(--gutter);
 }
 .work-head .h2 {
   font-size: clamp(1.9rem, 3.4vw, 3.5rem);
 }
 .work-stage {
   position: relative;
-  flex: 1;
+  flex: none;
+  height: var(--ch);
   perspective: 1400px;
 }
 .card {
+  /* how far this card is from the centre, in vw; --far is 0 at the centre and 1 at the far
+     end of the loop, where the card wraps round to the other side (fully faded, so unseen) */
   --dx: calc(var(--i) * var(--step) - var(--p) * var(--travel));
+  --far: calc(var(--dx) / (var(--loop) / 2));
   position: absolute;
   top: 50%;
   left: 0;
   width: calc(var(--cw) * 1vw);
-  height: min(56svh, calc(var(--cw) * 1.35vw));
+  height: var(--ch);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
@@ -1017,10 +1029,19 @@ em {
   box-shadow:
     0 40px 80px -30px rgba(0, 0, 0, 0.85),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  opacity: calc(1.15 - var(--dx) * var(--dx) * 0.00011);
+  opacity: clamp(0, calc(1.15 - var(--far) * var(--far) * 1.25), 1);
   transform: translate3d(calc((50 - var(--cw) / 2 + var(--dx)) * 1vw), -50%, calc(var(--dx) * var(--dx) * -0.11px))
     rotateY(clamp(-50deg, calc(var(--dx) * 0.85deg), 50deg));
   will-change: transform, opacity;
+}
+/* endless loop: wrap each card's distance into one loop length around the centre, so both
+   sides of the screen always have cards (browsers without mod() simply don't loop) */
+@supports (width: calc(mod(5px, 3px))) {
+  .card {
+    --dx: calc(
+      mod(var(--i) * var(--step) - var(--p) * var(--travel) + var(--loop) / 2, var(--loop)) - var(--loop) / 2
+    );
+  }
 }
 /* the project photo fills the card; it is darkened toward the bottom so the text stays readable */
 .card-img {
@@ -1127,10 +1148,9 @@ em {
 }
 
 .work-progress {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: 2.4rem;
+  position: relative;
+  flex: none;
+  margin-inline: var(--gutter);
   height: 1px;
   background: var(--faint);
 }
@@ -1573,6 +1593,14 @@ em {
   }
 }
 
+/* big screens: card width is a share of the screen width, so narrow it to stop cards growing */
+@media (min-width: 1600px) {
+  .work {
+    --cw: 18;
+    --gap: 3;
+  }
+}
+
 @media (max-width: 900px) {
   /* three large service cards no longer fit side by side: stack them, two-column lists */
   .svc-grid.svc-core {
@@ -1600,13 +1628,11 @@ em {
     grid-template-columns: 1fr;
   }
   .work {
-    --cw: 74;
-    --gap: 8;
+    --cw: 70;
+    --gap: 5;
+    --ch: min(52svh, 98vw);
     /* wide cards travel further, so give them a little more scroll */
     height: 320vh;
-  }
-  .card {
-    height: min(62svh, 112vw);
   }
 }
 
@@ -1690,18 +1716,19 @@ em {
     font-size: clamp(1.9rem, min(6.4vw, 12svh), 4rem);
   }
   .work {
-    --cw: 40;
-    --gap: 5;
+    --cw: 36;
+    --gap: 4;
+    --ch: 58svh;
+  }
+  .work-sticky {
+    gap: 0.8rem;
+    padding-top: 3.4rem;
   }
   .work-head {
     gap: 0.4rem;
-    padding-top: 3.9rem;
   }
   .work-head .h2 {
     font-size: clamp(1.4rem, 7svh, 2.2rem);
-  }
-  .card {
-    height: 64svh;
   }
   .card-info {
     padding: 0.8rem 1rem 1rem;
@@ -1709,9 +1736,6 @@ em {
   .card-sum,
   .card-tags {
     display: none;
-  }
-  .work-progress {
-    bottom: 1.2rem;
   }
 }
 
