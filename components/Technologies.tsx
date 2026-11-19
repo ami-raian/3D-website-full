@@ -1,18 +1,145 @@
+import {
+  siBigcommerce,
+  siDocker,
+  siElasticsearch,
+  siExpo,
+  siFigma,
+  siFirebase,
+  siFlutter,
+  siGithub,
+  siGithubactions,
+  siGo,
+  siGooglecloud,
+  siGraphql,
+  siJira,
+  siKotlin,
+  siKubernetes,
+  siLaravel,
+  siLinear,
+  siMongodb,
+  siNestjs,
+  siNextdotjs,
+  siNodedotjs,
+  siNotion,
+  siPaypal,
+  siPhp,
+  siPostgresql,
+  siPython,
+  siPytorch,
+  siReact,
+  siRedis,
+  siShopify,
+  siStripe,
+  siSupabase,
+  siSwift,
+  siTailwindcss,
+  siTerraform,
+  siThreedotjs,
+  siTypescript,
+  siVercel,
+  siVuedotjs,
+  siWoocommerce,
+  siZoom,
+} from "simple-icons";
 import Marquee from "./Marquee";
+import StackTabs, { type StackGroup, type StackTool } from "./StackTabs";
 import Track from "./Track";
 import { vars } from "@/lib/css";
 
 const TICKER = ["Shopify", "Next.js", "TypeScript", "WooCommerce", "Node.js", "React Native", "AWS", "AI & LLMs"];
 
-const STACK = [
-  { area: "E-commerce", tools: ["Shopify", "Shopify Plus", "Liquid", "Hydrogen", "WooCommerce", "Stripe"] },
-  { area: "Remote teams", tools: ["Jira", "Slack", "Notion", "GitHub", "Time tracking"] },
-  { area: "Frontend", tools: ["Next.js", "React", "TypeScript", "Tailwind CSS"] },
-  { area: "Backend", tools: ["Node.js", "NestJS", "Python", "Go", "GraphQL"] },
-  { area: "Mobile", tools: ["React Native", "Flutter", "Swift", "Kotlin"] },
-  { area: "Data & AI", tools: ["PostgreSQL", "MongoDB", "Redis", "LLM APIs", "Vector search"] },
-  { area: "Cloud & DevOps", tools: ["AWS", "Google Cloud", "Docker", "Kubernetes", "Terraform"] },
-  { area: "Design", tools: ["Figma", "Design systems", "Prototyping", "Usability testing"] },
+type Icon = { path: string; hex: string };
+
+/** a logo tile; brands too dark to see on this page hover in the page colour instead */
+const tool = (name: string, icon: Icon): StackTool => {
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(icon.hex.slice(i, i + 2), 16) / 255);
+  const light = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return { name, path: icon.path, color: light < 0.22 ? "#f2f0ec" : `#${icon.hex}` };
+};
+/** a tile for tools that have no logo in the icon set */
+const named = (name: string, mono: string): StackTool => ({ name, mono, color: "#b79cff" });
+
+const STACK: StackGroup[] = [
+  {
+    area: "E-commerce",
+    tools: [
+      tool("Shopify", siShopify),
+      tool("WooCommerce", siWoocommerce),
+      tool("BigCommerce", siBigcommerce),
+      named("Magento", "Mg"),
+      tool("Stripe", siStripe),
+      tool("PayPal", siPaypal),
+    ],
+  },
+  {
+    area: "Frontend",
+    tools: [
+      tool("Next.js", siNextdotjs),
+      tool("React", siReact),
+      tool("TypeScript", siTypescript),
+      tool("Tailwind CSS", siTailwindcss),
+      tool("Vue.js", siVuedotjs),
+      tool("Three.js", siThreedotjs),
+    ],
+  },
+  {
+    area: "Backend",
+    tools: [
+      tool("Node.js", siNodedotjs),
+      tool("NestJS", siNestjs),
+      tool("Python", siPython),
+      tool("Go", siGo),
+      tool("GraphQL", siGraphql),
+      tool("Laravel", siLaravel),
+      tool("PHP", siPhp),
+    ],
+  },
+  {
+    area: "Mobile",
+    tools: [
+      tool("React Native", siReact),
+      tool("Flutter", siFlutter),
+      tool("Swift", siSwift),
+      tool("Kotlin", siKotlin),
+      tool("Expo", siExpo),
+      tool("Firebase", siFirebase),
+    ],
+  },
+  {
+    area: "Cloud & DevOps",
+    tools: [
+      named("AWS", "AWS"),
+      tool("Google Cloud", siGooglecloud),
+      tool("Docker", siDocker),
+      tool("Kubernetes", siKubernetes),
+      tool("Terraform", siTerraform),
+      tool("GitHub Actions", siGithubactions),
+      tool("Vercel", siVercel),
+    ],
+  },
+  {
+    area: "Data & AI",
+    tools: [
+      tool("PostgreSQL", siPostgresql),
+      tool("MongoDB", siMongodb),
+      tool("Redis", siRedis),
+      tool("Supabase", siSupabase),
+      tool("Elasticsearch", siElasticsearch),
+      tool("PyTorch", siPytorch),
+    ],
+  },
+  {
+    area: "Remote teams",
+    tools: [
+      tool("Jira", siJira),
+      named("Slack", "Sl"),
+      tool("Notion", siNotion),
+      tool("GitHub", siGithub),
+      tool("Figma", siFigma),
+      tool("Linear", siLinear),
+      tool("Zoom", siZoom),
+    ],
+  },
 ];
 
 export default function Technologies() {
@@ -31,21 +158,11 @@ export default function Technologies() {
 
       <Marquee items={TICKER} />
 
-      <div className="section-inner tech-grid">
-        {STACK.map((s, i) => (
-          <Track key={s.area} as="div" mode="enter" className="tech-card rise" style={vars({ "--i": i % 4 })}>
-            <h3>
-              <span>0{i + 1}</span>
-              {s.area}
-            </h3>
-            <ul className="tags">
-              {s.tools.map((t) => (
-                <li key={t}>{t}</li>
-              ))}
-            </ul>
-          </Track>
-        ))}
-      </div>
+      <Track as="div" mode="enter" className="section-inner">
+        <div className="rise">
+          <StackTabs groups={STACK} />
+        </div>
+      </Track>
     </Track>
   );
 }

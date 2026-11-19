@@ -36,20 +36,15 @@ function CoreGroup({ group }: { group: ServiceGroup }) {
           // each card tracks its own position, so a lower row reveals when it arrives, not with the first
           <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 3 })}>
             <TiltCard>
-              <div className="svc-top">
+              <span className="step-num svc-num">0{i + 1}</span>
+              <div className="svc-head">
                 <Icon s={s} />
-                <span className="step-num">0{i + 1}</span>
+                <h3>{s.title}</h3>
               </div>
-              <h3>{s.title}</h3>
               <p>{s.text}</p>
               <ul className="svc-points" aria-label="What's included">
                 {s.points?.map((p) => (
                   <li key={p}>{p}</li>
-                ))}
-              </ul>
-              <ul className="tags" aria-label="Typical tools">
-                {s.tags?.map((t) => (
-                  <li key={t}>{t}</li>
                 ))}
               </ul>
             </TiltCard>
@@ -84,8 +79,10 @@ export default function Services() {
             <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 3 })}>
               <TiltCard>
                 <Icon s={s} />
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </div>
               </TiltCard>
             </Track>
           ))}

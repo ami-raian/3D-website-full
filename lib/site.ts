@@ -43,7 +43,6 @@ export type Service = {
   icon: ServiceIcon;
   group?: ServiceGroup;
   points?: string[];
-  tags?: string[];
 };
 
 export const SERVICE_GROUPS: Record<ServiceGroup, { label: string; text: string }> = {
@@ -71,7 +70,6 @@ export const SERVICES: Service[] = [
       "Payments, shipping, taxes and markets",
       "Domain, email and launch checklist",
     ],
-    tags: ["Shopify", "Liquid", "Online Store 2.0"],
     icon: "bag",
   },
   {
@@ -86,7 +84,6 @@ export const SERVICES: Service[] = [
       "ERP, CRM and marketplace integrations",
       "Shopify Plus and headless (Hydrogen)",
     ],
-    tags: ["Shopify Plus", "Hydrogen", "Shopify APIs"],
     icon: "code",
   },
   {
@@ -101,7 +98,6 @@ export const SERVICES: Service[] = [
       "Analytics and tracking setup",
       "Monthly maintenance and support",
     ],
-    tags: ["SEO", "CRO", "Analytics"],
     icon: "chart",
   },
 
@@ -118,7 +114,6 @@ export const SERVICES: Service[] = [
       "Inventory, ERP and CRM integrations",
       "Analytics and conversion tracking",
     ],
-    tags: ["WooCommerce", "Headless", "Stripe"],
     icon: "tag",
   },
   {
@@ -133,7 +128,6 @@ export const SERVICES: Service[] = [
       "Payroll and contract coordination",
       "Smooth hand-offs across time zones",
     ],
-    tags: ["Jira", "Slack", "Time tracking"],
     icon: "team",
   },
   {
@@ -148,7 +142,6 @@ export const SERVICES: Service[] = [
       "Offers, contracts and onboarding",
       "Full-time, part-time or per project",
     ],
-    tags: ["Developers", "Designers", "Virtual assistants"],
     icon: "hire",
   },
 

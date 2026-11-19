@@ -505,9 +505,9 @@ em {
 /* taller = more scroll per word. The pinned box is shorter than the screen and held in its
    middle, so there's no half-screen of empty space above and below the paragraph */
 .story {
-  --sh: min(100svh, 27rem);
+  --sh: min(100svh, 22rem);
   position: relative;
-  height: 190vh;
+  height: 150vh;
 }
 .story-sticky {
   position: sticky;
@@ -519,9 +519,10 @@ em {
   height: var(--sh);
   padding: 0 var(--gutter);
 }
+/* the full content width: fewer, longer lines, so the paragraph takes less scrolling */
 .story-text {
-  max-width: 25em;
-  font-size: clamp(1.3rem, 2.4vw, 2.4rem);
+  max-width: none;
+  font-size: clamp(1.3rem, 2.3vw, 2.3rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -634,33 +635,45 @@ em {
 .svc-core {
   grid-template-columns: repeat(3, 1fr);
 }
-.svc-top {
+/* icon beside the title (not above it) keeps the cards short */
+.svc-head {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 1.1rem;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.8rem;
+  padding-right: 2rem;
 }
-.svc-top .svc-icon {
-  margin-bottom: 0;
+.svc-head .svc-icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  margin: 0;
 }
-.svc-core h3 {
-  font-size: clamp(1.3rem, 1.7vw, 1.75rem);
+.svc-num {
+  position: absolute;
+  top: clamp(1.3rem, 1.8vw, 1.8rem);
+  right: clamp(1.3rem, 1.8vw, 1.8rem);
+}
+.tilt .svc-head h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.45vw, 1.45rem);
 }
 .svc-core .tilt > p {
   max-width: 46ch;
+  font-size: 0.92rem;
 }
 .svc-points {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 0.5rem 1.6rem;
-  margin-top: 1.3rem;
-  padding-top: 1.2rem;
+  gap: 0.3rem 1.6rem;
+  margin-top: 1rem;
+  padding-top: 0.9rem;
   border-top: 1px solid var(--line);
 }
 .svc-points li {
   position: relative;
-  padding-left: 1.4rem;
-  font-size: 0.88rem;
+  padding-left: 1.3rem;
+  font-size: 0.85rem;
   line-height: 1.4;
   color: rgba(242, 240, 236, 0.85);
 }
@@ -669,26 +682,33 @@ em {
   position: absolute;
   top: 0.6em;
   left: 0;
-  width: 0.75rem;
+  width: 0.7rem;
   height: 1.5px;
   border-radius: 2px;
   background: var(--iri);
 }
 
-/* more services: compact cards */
+/* more services: compact cards, icon beside the text */
 .svc-more .tilt {
-  padding: clamp(1.2rem, 1.6vw, 1.5rem);
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
 }
 .svc-more .svc-icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 1rem;
+  width: 36px;
+  height: 36px;
+  margin: 0;
 }
-.svc-more h3 {
-  font-size: clamp(1.15rem, 1.4vw, 1.4rem);
+.svc-more .tilt h3 {
+  margin: 0.1rem 0 0.3rem;
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
 }
 .svc-more p {
-  font-size: 0.92rem;
+  font-size: 0.84rem;
+  line-height: 1.45;
 }
 
 /* small animated icons, pure CSS */
@@ -947,13 +967,11 @@ em {
   top: 50%;
   left: 0;
   width: calc(var(--cw) * 1vw);
-  height: min(50svh, calc(var(--cw) * 1.25vw));
+  height: min(56svh, calc(var(--cw) * 1.35vw));
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
-  background:
-    radial-gradient(120% 90% at 50% 0%, hsl(var(--h) 80% 55% / 0.3), transparent 62%),
-    linear-gradient(180deg, rgba(22, 22, 32, 0.82), rgba(9, 9, 14, 0.92));
+  background: #0c0c12;
   box-shadow:
     0 40px 80px -30px rgba(0, 0, 0, 0.85),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -962,173 +980,110 @@ em {
     rotateY(clamp(-50deg, calc(var(--dx) * 0.85deg), 50deg));
   will-change: transform, opacity;
 }
-.art {
+/* the project photo fills the card; it is darkened toward the bottom so the text stays readable */
+.card-img {
+  object-fit: cover;
+  filter: saturate(0.9) brightness(0.9);
+  transition:
+    transform 1.2s var(--ease),
+    filter 0.6s;
+}
+.card::after {
+  content: "";
   position: absolute;
-  inset: 0 0 32% 0;
-  display: grid;
-  place-items: center;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 7, 11, 0.55) 0%, rgba(7, 7, 11, 0) 22%),
+    linear-gradient(0deg, rgba(7, 7, 11, 0.97) 0%, rgba(7, 7, 11, 0.85) 36%, rgba(7, 7, 11, 0) 68%);
+  pointer-events: none;
 }
-.art span {
+@media (hover: hover) {
+  .card:hover .card-img {
+    transform: scale(1.06);
+    filter: saturate(1) brightness(1);
+  }
+}
+.card-sector {
   position: absolute;
-}
-
-/* orb */
-.art-orb span:nth-child(1) {
-  width: 46%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 32% 28%,
-    #fff 0 3%,
-    hsl(var(--h) 100% 82%) 10%,
-    hsl(var(--h) 90% 58%) 38%,
-    hsl(calc(var(--h) + 40) 80% 16%) 74%
-  );
-  box-shadow: 0 0 90px hsl(var(--h) 90% 60% / 0.45);
-  animation: bob 6s ease-in-out infinite;
-}
-.art-orb span:nth-child(2) {
-  width: 76%;
-  aspect-ratio: 1;
-  border: 1px solid hsl(var(--h) 90% 80% / 0.4);
-  border-radius: 50%;
-  animation: tiltSpin 16s linear infinite;
-}
-.art-orb span:nth-child(3) {
-  top: 18%;
-  right: 22%;
-  width: 7%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 22px #fff;
-  animation: bob 4s ease-in-out infinite reverse;
-}
-
-/* stack */
-.art-stack span {
-  width: 30%;
-  height: 58%;
-  border-radius: 14px;
-  background: linear-gradient(160deg, hsl(var(--h) 90% 72%), hsl(calc(var(--h) + 70) 70% 26%));
-  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
-}
-.art-stack span:nth-child(1) {
-  opacity: 0.5;
-  transform: translate(-48%, 6%) rotate(-14deg);
-}
-.art-stack span:nth-child(2) {
-  opacity: 0.5;
-  transform: translate(48%, 6%) rotate(14deg);
-}
-.art-stack span:nth-child(3) {
-  animation: bob 5s ease-in-out infinite;
-}
-
-/* rings */
-.art-rings span {
-  aspect-ratio: 1;
-  border: 1.5px solid hsl(var(--h) 90% 76% / 0.75);
-  border-radius: 50%;
-  animation: pulse 3.2s ease-in-out infinite;
-}
-.art-rings span:nth-child(1) {
-  width: 26%;
-  box-shadow:
-    0 0 40px hsl(var(--h) 90% 60% / 0.6),
-    inset 0 0 30px hsl(var(--h) 90% 60% / 0.5);
-}
-.art-rings span:nth-child(2) {
-  width: 48%;
-  opacity: 0.65;
-  animation-delay: 0.4s;
-}
-.art-rings span:nth-child(3) {
-  width: 70%;
-  opacity: 0.35;
-  animation-delay: 0.8s;
-}
-
-/* waves */
-.art-waves span {
-  left: -10%;
-  width: 120%;
-  height: 22%;
-  border-top: 2px solid hsl(var(--h) 90% 70%);
-  border-radius: 50%;
-  animation: sway 6s ease-in-out infinite;
-}
-.art-waves span:nth-child(1) {
-  top: 24%;
-}
-.art-waves span:nth-child(2) {
-  top: 40%;
-  border-color: hsl(calc(var(--h) + 40) 90% 70%);
-  animation-delay: -2s;
-}
-.art-waves span:nth-child(3) {
-  top: 56%;
-  border-color: hsl(calc(var(--h) + 80) 90% 70%);
-  animation-delay: -4s;
-}
-
-/* prism */
-.art-prism span:nth-child(1) {
   z-index: 2;
-  width: 40%;
-  aspect-ratio: 1 / 0.88;
-  background: conic-gradient(from 200deg, #8fd3ff, #b79cff, #ff9ccf, #ffc48a, #8fd3ff);
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-  animation: bob 6s ease-in-out infinite;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(7, 7, 11, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
-.art-prism span:nth-child(2) {
-  left: 0;
-  top: 52%;
-  width: 45%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #fff);
-  transform: rotate(-10deg);
-  transform-origin: 100% 50%;
-}
-.art-prism span:nth-child(3) {
-  right: 0;
-  top: 36%;
-  width: 48%;
-  height: 34%;
-  background: linear-gradient(180deg, #ff4d6d, #ffc84a, #4dffb0, #4db8ff, #b04dff);
-  clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 54%);
-  opacity: 0.55;
-  filter: blur(5px);
-}
-
 .card-info {
   position: absolute;
+  z-index: 2;
   inset: auto 0 0;
-  padding: 1.3rem 1.5rem 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.35));
+  padding: 1.2rem 1.3rem 1.3rem;
 }
 .card-num {
   font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   color: var(--muted);
 }
 .card h3 {
-  margin: 0.35rem 0 0.45rem;
-  font-size: clamp(1.3rem, 1.8vw, 1.85rem);
+  margin: 0.3rem 0 0.5rem;
+  font-size: clamp(1.3rem, 1.8vw, 1.8rem);
   font-weight: var(--display);
   line-height: 1;
   letter-spacing: -0.03em;
   text-transform: uppercase;
 }
-.card p {
-  font-size: 0.9rem;
+.card-sum {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: rgba(242, 240, 236, 0.78);
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-top: 0.9rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.card-result {
+  font-size: 0.76rem;
   color: var(--muted);
 }
-.card p span {
-  opacity: 0.6;
+.card-result strong {
+  margin-right: 0.15rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: transparent;
+  background: var(--iri);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.card-tags li {
+  padding: 0.22rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  color: rgba(242, 240, 236, 0.8);
+}
+
 .work-progress {
   position: absolute;
   left: var(--gutter);
@@ -1183,41 +1138,106 @@ em {
 .tech .marquee {
   margin-bottom: clamp(2rem, 5vh, 3rem);
 }
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+/* technology areas as tabs, each with a row of logo tiles */
+.stack-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
 }
-.tech-card {
-  padding: clamp(1.1rem, 1.5vw, 1.4rem);
+.stack-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.95rem;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition:
+    color 0.3s,
+    background-color 0.3s,
+    border-color 0.3s;
+}
+.stack-tabs button span {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+@media (hover: hover) {
+  .stack-tabs button:hover {
+    color: var(--fg);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+}
+.stack-tabs button[aria-selected="true"] {
+  color: var(--bg);
+  background: var(--fg);
+  border-color: var(--fg);
+}
+.stack-grid {
+  display: grid;
+  /* seven tiles fit one row at full width */
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.7rem;
+}
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
     rgba(10, 10, 16, 0.55);
-  transition: border-color 0.4s;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: tileIn 0.5s var(--ease) both;
+  animation-delay: calc(var(--i) * 40ms);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
 }
-@media (hover: hover) {
-  .tech-card:hover {
-    border-color: rgba(183, 156, 255, 0.45);
-  }
+.tool svg,
+.tool-mono {
+  flex: none;
+  width: 24px;
+  height: 24px;
 }
-.tech-card h3 {
-  display: flex;
-  align-items: baseline;
-  gap: 0.7rem;
-  margin-bottom: 1rem;
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  font-weight: var(--display);
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+.tool svg {
+  fill: rgba(242, 240, 236, 0.75);
+  transition: fill 0.3s;
 }
-.tech-card h3 span {
+.tool-mono {
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(242, 240, 236, 0.6);
+  border-radius: 6px;
   font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  color: var(--muted);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(242, 240, 236, 0.75);
+  transition:
+    color 0.3s,
+    border-color 0.3s;
+}
+/* hovering a tile shows the brand's own colour */
+@media (hover: hover) {
+  .tool:hover {
+    border-color: color-mix(in srgb, var(--c) 55%, transparent);
+    background-color: color-mix(in srgb, var(--c) 8%, transparent);
+  }
+  .tool:hover svg {
+    fill: var(--c);
+  }
+  .tool:hover .tool-mono {
+    color: var(--c);
+    border-color: var(--c);
+  }
 }
 
 /* ---------- contact + footer ---------- */
@@ -1478,22 +1498,16 @@ em {
     translate: 0 -14px;
   }
 }
-@keyframes bob {
-  50% {
-    transform: translate3d(0, -7%, 0);
-  }
-}
 @keyframes pulse {
   50% {
     transform: scale(1.08);
   }
 }
-@keyframes tiltSpin {
+/* technology tiles appearing when a tab opens */
+@keyframes tileIn {
   from {
-    transform: rotateX(72deg) rotateZ(0deg);
-  }
-  to {
-    transform: rotateX(72deg) rotateZ(360deg);
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
   }
 }
 @keyframes sway {
@@ -1527,8 +1541,7 @@ em {
   .sec-head {
     grid-template-columns: 1fr;
   }
-  .svc-grid,
-  .tech-grid {
+  .svc-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .stats {
@@ -1544,7 +1557,7 @@ em {
     height: 320vh;
   }
   .card {
-    height: min(58svh, 98vw);
+    height: min(62svh, 112vw);
   }
 }
 
@@ -1553,7 +1566,7 @@ em {
     display: none;
   }
   .story {
-    height: 170vh;
+    height: 140vh;
   }
   .story-text {
     font-size: clamp(1.25rem, min(5vw, 5.6svh), 2rem);
@@ -1565,7 +1578,6 @@ em {
 
 @media (max-width: 600px) {
   .svc-grid,
-  .tech-grid,
   .svc-points,
   .form-row {
     grid-template-columns: 1fr;
@@ -1576,19 +1588,6 @@ em {
   /* narrow screens wrap the paragraph onto more lines, so its pinned box is taller */
   .story {
     --sh: min(100svh, 31rem);
-  }
-  /* compact service cards: icon beside the text instead of above it */
-  .svc-more .tilt {
-    display: grid;
-    grid-template-columns: 40px minmax(0, 1fr);
-    column-gap: 1rem;
-  }
-  .svc-more .svc-icon {
-    grid-row: span 2;
-    margin: 0;
-  }
-  .svc-more h3 {
-    margin-top: 0.6rem;
   }
   .contact-list div {
     grid-template-columns: 1fr;
@@ -1636,6 +1635,10 @@ em {
   }
   .card-info {
     padding: 0.8rem 1rem 1rem;
+  }
+  .card-sum,
+  .card-tags {
+    display: none;
   }
   .work-progress {
     bottom: 1.2rem;
