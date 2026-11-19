@@ -13,8 +13,7 @@ const serif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: "Lumen | Real-time 3D studio",
-  description:
-    "A lightweight, scroll-driven 3D experience. Every frame is rendered live with WebGL, with no videos or image sequences to download.",
+  description: "A lightweight, scroll-driven 3D experience.",
 };
 
 export const viewport: Viewport = {

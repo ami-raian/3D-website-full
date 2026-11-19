@@ -1,12 +1,7 @@
-import Track from "./Track";
-
-/**
- * Static hero: one screen of title and intro on the plain page colour. No animation.
- * It is still tracked (as "hero") so the WebGL world behind it can stay idle while it fills the screen.
- */
+/** Static hero: one screen of title and intro on the plain page colour. No animation. */
 export default function Hero() {
   return (
-    <Track as="header" name="hero" id="top" className="hero">
+    <header id="top" className="hero">
       <div className="hero-inner">
         <div className="hero-meta">
           <span>( Lumen Studio )</span>
@@ -23,16 +18,13 @@ export default function Hero() {
         </h1>
 
         <div className="hero-foot">
-          <p>
-            An independent studio building immersive web experiences. Scroll to step inside a world rendered live on
-            your GPU.
-          </p>
+          <p>An independent studio building immersive web experiences.</p>
         </div>
-        <a href="#film" className="scroll-cue" data-cursor>
+        <a href="#story" className="scroll-cue" data-cursor>
           <span>Scroll to explore</span>
           <span className="cue-line" aria-hidden />
         </a>
       </div>
-    </Track>
+    </header>
   );
 }

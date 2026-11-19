@@ -128,31 +128,17 @@ em,
   cursor: none;
 }
 
-/* ---------- WebGL layer ---------- */
+/* ---------- backdrop (static, fixed behind the page) ---------- */
 
-.gl-fallback {
+.backdrop {
   position: fixed;
   inset: 0;
   z-index: 0;
+  pointer-events: none;
   background:
     radial-gradient(55% 50% at 72% 45%, rgba(123, 77, 255, 0.28), transparent 70%),
     radial-gradient(40% 40% at 18% 85%, rgba(255, 140, 90, 0.12), transparent 70%),
     var(--bg);
-}
-.gl {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  display: block;
-  width: 100vw;
-  height: 100lvh;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1.8s var(--ease);
-}
-.gl.is-ready {
-  opacity: 1;
 }
 
 /* ---------- progress + nav ---------- */
@@ -348,7 +334,7 @@ em,
 
 /* ---------- hero ---------- */
 
-/* one static screen on the plain page colour; it covers the WebGL world until you scroll past */
+/* one static screen on the plain page colour; it covers the backdrop until you scroll past */
 .hero {
   position: relative;
   display: flex;
@@ -436,184 +422,6 @@ em,
   width: 64px;
   height: 1px;
   background: var(--muted);
-}
-
-/* ---------- film (pinned, scroll-scrubbed) ---------- */
-
-.film {
-  position: relative;
-  height: 640vh;
-}
-.film-sticky {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: clip;
-  perspective: 1000px;
-}
-.vf {
-  position: absolute;
-  inset: 5.2rem var(--pad) 3.2rem;
-  pointer-events: none;
-}
-.vf i {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  border: 0 solid rgba(255, 255, 255, 0.45);
-}
-.vf i:nth-child(1) {
-  top: 0;
-  left: 0;
-  border-top-width: 1px;
-  border-left-width: 1px;
-}
-.vf i:nth-child(2) {
-  top: 0;
-  right: 0;
-  border-top-width: 1px;
-  border-right-width: 1px;
-}
-.vf i:nth-child(3) {
-  bottom: 0;
-  left: 0;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-}
-.vf i:nth-child(4) {
-  right: 0;
-  bottom: 0;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-}
-.hud {
-  position: absolute;
-  left: calc(var(--pad) + 2.2rem);
-  right: calc(var(--pad) + 2.2rem);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.hud > span {
-  white-space: nowrap;
-}
-.hud-top {
-  top: 6.2rem;
-}
-.hud-bottom {
-  bottom: 4.2rem;
-}
-.rec {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: var(--fg);
-}
-.rec b {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ff4d5e;
-  box-shadow: 0 0 12px #ff4d5e;
-  animation: blink 1.4s ease-in-out infinite;
-}
-.ticks {
-  display: flex;
-  gap: 6px;
-}
-.ticks i {
-  width: 28px;
-  height: 3px;
-  border-radius: 3px;
-  background: var(--fg);
-  opacity: clamp(0.2, calc((var(--p) * 4 - var(--i)) * 8), 1);
-}
-.film-progress {
-  position: absolute;
-  left: calc(var(--pad) + 24px);
-  right: calc(var(--pad) + 24px);
-  bottom: 3.2rem;
-  height: 1px;
-  background: var(--faint);
-}
-.film-progress span {
-  display: block;
-  height: 100%;
-  background: var(--fg);
-  transform: scaleX(var(--p));
-  transform-origin: 0 50%;
-}
-
-.cap {
-  --v: 0;
-  --d: 0;
-  position: absolute;
-  top: 50%;
-  left: calc(var(--pad) + 2.2rem);
-  width: min(52vw, 760px);
-  visibility: hidden;
-  opacity: var(--v);
-  transform: translate3d(0, calc(-50% + var(--d) * -16vh), 0) rotateX(calc(var(--d) * -28deg));
-  filter: blur(calc((1 - var(--v)) * 12px));
-  will-change: transform, opacity, filter;
-}
-.cap-right {
-  left: auto;
-  right: calc(var(--pad) + 2.2rem);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-}
-.cap-num {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-bottom: 1.2rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.cap-right .cap-num {
-  justify-content: flex-end;
-}
-.cap-num span {
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.7rem;
-  font-style: italic;
-  letter-spacing: 0;
-  color: var(--fg);
-}
-.cap-num i {
-  width: 48px;
-  height: 1px;
-  background: var(--faint);
-}
-.cap-title {
-  font-size: clamp(2.8rem, 5.4vw, 6rem);
-  white-space: nowrap;
-  font-weight: var(--display);
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
-}
-.cap-sub {
-  max-width: 30ch;
-  margin-top: 1.4rem;
-  font-size: clamp(1rem, 1.35vw, 1.25rem);
-  color: var(--muted);
-}
-.cap-right .cap-sub {
-  margin-left: auto;
 }
 
 /* ---------- story (word-by-word reveal) ---------- */
@@ -1229,11 +1037,6 @@ html:not(.has-cursor) .cursor-ring {
 
 /* ---------- keyframes ---------- */
 
-@keyframes blink {
-  50% {
-    opacity: 0.2;
-  }
-}
 @keyframes breathe {
   50% {
     transform: scale(0.45);
@@ -1310,33 +1113,6 @@ html:not(.has-cursor) .cursor-ring {
     flex-direction: column;
     align-items: flex-start;
   }
-  .film {
-    height: 560vh;
-  }
-  .cap,
-  .cap-right {
-    top: auto;
-    right: var(--pad);
-    bottom: 22svh;
-    left: var(--pad);
-    width: auto;
-    align-items: flex-start;
-    text-align: left;
-    transform: translate3d(0, calc(var(--d) * -10vh), 0) rotateX(calc(var(--d) * -24deg));
-  }
-  .cap-right .cap-num {
-    justify-content: flex-start;
-  }
-  .cap-right .cap-sub {
-    margin-left: 0;
-  }
-  .cap-title {
-    font-size: clamp(2.4rem, 11vw, 4.2rem);
-  }
-  .hud {
-    left: calc(var(--pad) + 1rem);
-    right: calc(var(--pad) + 1rem);
-  }
   .story {
     height: 240vh;
   }
@@ -1349,13 +1125,6 @@ html:not(.has-cursor) .cursor-ring {
 @media (max-width: 380px) {
   .nav-cta {
     padding: 0.55rem 0.9rem;
-  }
-  .hud {
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-  }
-  .ticks i {
-    width: 18px;
   }
 }
 
@@ -1374,37 +1143,6 @@ html:not(.has-cursor) .cursor-ring {
   .hero-foot p {
     max-width: 48ch;
     font-size: 0.85rem;
-  }
-  .vf {
-    inset: 3.9rem var(--pad) 1.5rem;
-  }
-  .hud-top {
-    top: 4.7rem;
-  }
-  .hud-bottom {
-    bottom: 2.4rem;
-  }
-  .film-progress {
-    bottom: 1.5rem;
-  }
-  .cap,
-  .cap-right {
-    bottom: auto;
-    top: 50%;
-    transform: translate3d(0, calc(-50% + var(--d) * -10vh), 0) rotateX(calc(var(--d) * -24deg));
-  }
-  .cap-num {
-    margin-bottom: 0.5rem;
-  }
-  .cap-num span {
-    font-size: 1.3rem;
-  }
-  .cap-title {
-    font-size: clamp(2rem, min(6vw, 14svh), 4.4rem);
-  }
-  .cap-sub {
-    margin-top: 0.6rem;
-    font-size: 0.9rem;
   }
   .work {
     --cw: 40;

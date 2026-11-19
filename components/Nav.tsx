@@ -5,7 +5,6 @@ import { engine } from "@/lib/engine";
 import { vars } from "@/lib/css";
 
 const LINKS = [
-  { href: "#film", label: "Film" },
   { href: "#work", label: "Work" },
   { href: "#process", label: "Process" },
   { href: "#contact", label: "Contact" },

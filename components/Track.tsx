@@ -6,7 +6,7 @@ import { engine, type TrackMode } from "@/lib/engine";
 type Props = {
   as?: "section" | "header" | "footer" | "div";
   mode?: TrackMode;
-  /** lets other components (e.g. the WebGL canvas) look this section up */
+  /** lets other code look this section up with engine.find() */
   name?: string;
   id?: string;
   className?: string;

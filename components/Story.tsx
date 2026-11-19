@@ -7,7 +7,7 @@ const TEXT =
 export default function Story() {
   const words = TEXT.split(" ");
   return (
-    <Track mode="pin" name="story" className="story" style={vars({ "--n": words.length })}>
+    <Track mode="pin" name="story" id="story" className="story" style={vars({ "--n": words.length })}>
       <div className="story-sticky">
         <p className="kicker">( Why it feels so light )</p>
         <p className="story-text">
