@@ -1,0 +1,26 @@
+{
+  "name": "lumen-3d-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "reel": "node scripts/reel/render.mjs 180 && node scripts/build-sequence.mjs .reel-frames/d 180 .reel-frames/m"
+  },
+  "dependencies": {
+    "lenis": "^1.3.27",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "puppeteer-core": "^24.43.1",
+    "sharp": "^0.34.5",
+    "three": "^0.181.2",
+    "typescript": "^5.9.3"
+  }
+}
