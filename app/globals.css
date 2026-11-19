@@ -14,7 +14,7 @@
   --pad: clamp(1.25rem, 4vw, 3.5rem);
   /* content is never wider than --max; padding-inline: var(--gutter) centres it.
      (the % resolves against the width of the element that uses it, so it works anywhere full-width) */
-  --max: 1200px;
+  --max: 75rem; /* 1200px, a little more on big screens (see html font-size) */
   --gutter: max(var(--pad), calc((100% - var(--max)) / 2));
   /* the one gap between sections */
   --space: clamp(4rem, 10vh, 7rem);
@@ -33,6 +33,9 @@
 }
 
 html {
+  /* 16px up to ~1440px wide, then growing smoothly to 20px on 2560px screens, so big
+     monitors don't get a tiny site: everything sized in rem scales with it */
+  font-size: clamp(16px, calc(10px + 0.42vw), 20px);
   background: var(--bg);
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
@@ -54,7 +57,7 @@ html.is-locked {
 body {
   min-height: 100vh;
   font-family: var(--font-display), system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.5;
   color: var(--fg);
   background: var(--bg);
@@ -458,9 +461,11 @@ em {
   position: absolute;
   z-index: 0;
   top: 0;
-  right: 0;
+  /* the right part of the content column (not the screen edge), so on every width the chip
+     sits beside the headline instead of over it */
+  right: max(0px, calc((100% - var(--max)) / 2 - 4rem));
   bottom: 0;
-  width: min(54vw, 900px);
+  width: min(54vw, calc(var(--max) * 0.55));
   pointer-events: none;
   opacity: 0;
   transition: opacity 1.4s var(--ease);
@@ -468,9 +473,10 @@ em {
 .hero3d.is-ready {
   opacity: 1;
 }
-/* below 900px there is no empty right side: the scene peeks in from the top-right corner
-   behind the headline, dimmed and fading out downwards so the text stays easy to read */
-@media (max-width: 900px) {
+/* narrow portrait screens have no empty right side: the scene peeks in from the top-right
+   corner behind the headline, dimmed and fading out downwards so the text stays easy to read.
+   (Phones held sideways do have room on the right, so they keep the desktop placement.) */
+@media (max-width: 900px) and (orientation: portrait) {
   .hero3d {
     top: 0;
     right: -30vw;
@@ -1753,6 +1759,22 @@ em {
     --ch: min(52svh, 98vw);
     /* wide cards travel further, so give them a little more scroll */
     height: 320vh;
+  }
+}
+
+/* tablets: phone-sized project cards (70% of the width) are too big here */
+@media (min-width: 601px) and (max-width: 900px) {
+  .work {
+    --cw: 46;
+    --gap: 4;
+    --ch: min(50svh, 60vw);
+  }
+}
+/* tall tablets above 900px (e.g. iPad Pro held upright): desktop cards would be tiny */
+@media (min-width: 901px) and (orientation: portrait) {
+  .work {
+    --cw: 34;
+    --gap: 4;
   }
 }
 
