@@ -1207,6 +1207,13 @@ em {
   width: 24px;
   height: 24px;
 }
+/* long names wrap inside the tile instead of running past its edge */
+.tool > span:last-child {
+  min-width: 0;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.2;
+}
 .tool svg {
   fill: rgba(242, 240, 236, 0.75);
   transition: fill 0.3s;
@@ -1592,6 +1599,27 @@ em {
   .contact-list div {
     grid-template-columns: 1fr;
     gap: 0.3rem;
+  }
+  /* tabs become one swipeable row (edge to edge, fading out on the right) instead of four rows */
+  .stack-tabs {
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * var(--pad));
+    padding-inline: var(--pad);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+    mask-image: linear-gradient(90deg, #000 85%, transparent);
+  }
+  .stack-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .stack-tabs button {
+    flex: none;
+  }
+  .tool {
+    gap: 0.55rem;
+    padding: 0.7rem 0.75rem;
+    font-size: 0.78rem;
   }
 }
 

@@ -17,8 +17,8 @@ npm run build && npm start
 | Navigation | `components/Nav.tsx` | Fixed bar with scroll progress and the current section underlined; full-screen menu below 900 px. |
 | About | `components/About.tsx`, `components/Story.tsx` | First screen with stats (`Counter.tsx`), then the word-by-word "Why it feels so light" statement. |
 | Services | `components/Services.tsx` | Three blocks: "Shopify, A to Z" (setup, development, growth & care), "E-commerce & remote teams" (e-commerce, remote team management, remote hiring), then compact cards for everything else. All come from `SERVICES` in `lib/site.ts`: `group: "shopify"` or `group: "core"` puts a service in a block of large cards, no group makes it a compact card. |
-| Projects | `components/Work.tsx` | Pinned, horizontally scrolling 3D gallery. Edit `PROJECTS`. |
-| Technologies | `components/Technologies.tsx` | Marquee (`Marquee.tsx`) that reacts to scroll speed, plus the stack grid. |
+| Projects | `components/Work.tsx`, `assets/projects/` | Pinned, horizontally scrolling 3D gallery of case studies with photos. Edit `PROJECTS`; photo credits are in `assets/projects/CREDITS.md`. |
+| Technologies | `components/Technologies.tsx`, `components/StackTabs.tsx` | Marquee (`Marquee.tsx`) that reacts to scroll speed, then tabs per area with logo tiles (logos from the `simple-icons` package). Edit `STACK`. |
 | Contact | `components/Contact.tsx`, `components/ContactForm.tsx`, `app/actions.ts` | Form handled by a Server Action, plus the footer bar. |
 
 Company name, email, section list, services and budget ranges live in `lib/site.ts`.
