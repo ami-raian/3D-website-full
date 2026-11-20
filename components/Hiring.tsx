@@ -13,7 +13,7 @@ export default function Hiring() {
           Hire your <em>remote team</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Developers, designers and e-commerce assistants, vetted by our senior engineers.
+          Skilled developers and designers, checked by our senior team.
         </p>
       </Track>
 
@@ -24,19 +24,13 @@ export default function Hiring() {
               <span className="svc-phase">Option 0{i + 1}</span>
               <h3>{m.title}</h3>
               <p>{m.text}</p>
-              <ul className="checks">
-                {m.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
             </TiltCard>
           </Track>
         ))}
       </div>
 
       <Track as="div" mode="enter" className="hire-roles rise">
-        <p className="kicker">( Roles we hire for )</p>
-        <ul className="role-list">
+        <ul className="role-list" aria-label="Roles we hire for">
           {HIRING.roles.map((r) => (
             <li key={r}>{r}</li>
           ))}
@@ -44,11 +38,7 @@ export default function Hiring() {
       </Track>
 
       <Track as="div" mode="enter" className="hire-cta rise">
-        <ul className="checks">
-          {HIRING.promises.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ul>
+        <p>Need someone for your team?</p>
         <a className="btn" href="#contact">
           <span>Book a hiring call</span>
           <b aria-hidden>→</b>

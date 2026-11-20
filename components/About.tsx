@@ -22,8 +22,8 @@ export default function About() {
 
         <div className="about-foot">
           <p className="lead">
-            {SITE.name} is an IT company. We build Shopify and <span className="nowrap">e-commerce</span> stores, websites and apps, and hire remote
-            developers and designers for your team.
+            We build Shopify stores, <span className="nowrap">e-commerce</span> sites, websites and apps, and help you
+            hire remote talent.
           </p>
           <div className="actions">
             <a className="btn" href="#contact">

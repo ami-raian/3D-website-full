@@ -23,9 +23,9 @@ npm run build && npm start
 | Work | `components/Work.tsx`, `assets/projects/` | Pinned, looping 3D gallery of case studies with photos. Edit `PROJECTS`; photo credits are in `assets/projects/CREDITS.md`. |
 | Testimonials | `components/Testimonials.tsx` | Hidden until `TESTIMONIALS` has real quotes. |
 | Hire talent | `components/Hiring.tsx` | Two ways to hire, the roles, and a call to action (`HIRING`). |
-| Process | `components/Process.tsx` | Five steps on a line that draws itself as you scroll (`PROCESS`). |
+| Process | `components/Process.tsx` | Four steps on a line that draws itself as you scroll (`PROCESS`). |
 | Team | `components/Team.tsx` | Role cards (`TEAM`); add a name, photo and LinkedIn to show a real person. |
-| Technologies | `components/Technologies.tsx`, `components/StackTabs.tsx` | Marquee (`Marquee.tsx`) that reacts to scroll speed, then tabs per area with logo tiles (logos from the `simple-icons` package). Edit `STACK`. |
+| Technologies | `components/Technologies.tsx`, `components/StackTabs.tsx` | Marquee (`Marquee.tsx`) that reacts to scroll speed, then four tabs with logo tiles (logos from the `simple-icons` package). Edit `STACK`. |
 | FAQ | `components/Faq.tsx` | Five questions (`FAQ`) in native `<details>` elements. |
 | Contact | `components/Contact.tsx`, `components/ContactForm.tsx`, `app/actions.ts` | Name, email and message, handled by a Server Action, plus the footer bar. |
 

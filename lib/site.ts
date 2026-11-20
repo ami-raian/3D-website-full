@@ -9,7 +9,7 @@
 export const SITE = {
   name: "Ucchas",
   email: "hello@example.com", // CONFIRM: your real address
-  /** shown under the contact form and in the hiring section */
+  /** shown under the contact form and in the FAQ */
   replyTime: "We reply within one business day", // CONFIRM
 };
 
@@ -29,7 +29,7 @@ export const STATS = [
   { to: 150, suffix: "+", label: "Projects delivered" },
   { to: 9, suffix: " yrs", label: "In business" },
   { to: 40, suffix: "+", label: "Remote hires placed" },
-  { to: 98, suffix: "%", label: "Clients who come back" },
+  { to: 98, suffix: "%", label: "Happy clients" },
 ];
 
 /* ------------------------------------------------------------------ why Ucchas */
@@ -37,28 +37,15 @@ export const STATS = [
 /** the line icons in components/LineIcon.tsx */
 export type IconName = "bag" | "cart" | "browser" | "people" | "phone" | "pen" | "cube";
 
-/** reasons to choose Ucchas: specific and checkable beats generic ("quality, on time") */
+/** reasons to choose Ucchas, kept short */
 export const WHY = [
-  {
-    title: "Commerce specialists",
-    text: "Shopify and e-commerce are our core. We know what makes a store fast and profitable.",
-  },
-  {
-    title: "Senior engineers",
-    text: "Experienced developers and designers do the work, and you talk to them directly.",
-  },
-  {
-    title: "Fixed price upfront",
-    text: "A written scope and a fixed quote before any work starts. No surprises.", // CONFIRM
-  },
-  {
-    title: "Here after launch",
-    text: "Support, maintenance and new features after go-live. Cancel any time.", // CONFIRM
-  },
+  { title: "Commerce experts", text: "Shopify and e-commerce are our core work." },
+  { title: "Senior team", text: "Experienced people do the work. You talk to them directly." },
+  { title: "Clear pricing", text: "You get a fixed quote before we start." }, // CONFIRM
+  { title: "Ongoing support", text: "We stay with you after launch." },
 ];
 
 /* ------------------------------------------------------------------ services */
-
 
 /** the four main services; each gets a large tile with a small illustration */
 export type MainService = "shopify" | "commerce" | "web" | "hiring";
@@ -69,8 +56,6 @@ export type Service = {
   icon: IconName;
   /** set on the main services */
   main?: MainService;
-  /** short keywords shown on the main tiles */
-  tags?: string[];
   /** optional in-page link, e.g. "#hiring" */
   href?: string;
 };
@@ -80,83 +65,50 @@ export const SERVICES: Service[] = [
   {
     main: "shopify",
     title: "Shopify development",
-    text: "Everything Shopify: new stores, custom themes and apps, migrations and Shopify Plus.",
-    tags: ["Store setup", "Custom themes", "Apps", "Migration", "Shopify Plus"],
+    text: "New stores, custom themes and apps, and moving your store to Shopify.",
     icon: "bag",
   },
   {
     main: "commerce",
-    title: "E-commerce development",
-    text: "Online stores and marketplaces on WooCommerce, BigCommerce or a custom stack.",
-    tags: ["WooCommerce", "BigCommerce", "Headless", "Marketplaces"],
+    title: "E-commerce",
+    text: "Online stores on WooCommerce, BigCommerce or custom code.",
     icon: "cart",
   },
   {
     main: "web",
     title: "Web development",
-    text: "Fast company websites, web apps and dashboards.",
+    text: "Company websites and web apps.",
     icon: "browser",
   },
   {
     main: "hiring",
     title: "Remote hiring",
-    text: "Vetted developers, designers and assistants who join your team. We hire, manage and pay them.",
+    text: "Skilled developers and designers for your team.",
     icon: "people",
     href: "#hiring",
   },
-  {
-    title: "Mobile apps",
-    text: "iOS and Android apps, built once with React Native.",
-    icon: "phone",
-  },
-  {
-    title: "UI/UX design",
-    text: "Clear, good-looking interfaces, from wireframes to design systems.",
-    icon: "pen",
-  },
-  {
-    title: "Custom software",
-    text: "SaaS platforms, internal tools, APIs and integrations.",
-    icon: "cube",
-  },
+  { title: "Mobile apps", text: "iOS and Android apps.", icon: "phone" },
+  { title: "UI/UX design", text: "Clean designs people enjoy using.", icon: "pen" },
+  { title: "Custom software", text: "Tools and systems for your business.", icon: "cube" },
 ];
 
 /* ------------------------------------------------------------------ remote hiring */
 
 export const HIRING = {
   modes: [
-    {
-      title: "Hire through Ucchas",
-      text: "You lead the work. We find, vet and contract the people, and handle payroll and replacements.",
-      points: ["You manage day to day", "Contracts and payroll handled", "Free replacement if it's not a fit"], // CONFIRM
-    },
-    {
-      title: "Fully managed team",
-      text: "We run them for you, with a single point of contact and clear reporting.",
-      points: ["Onboarding and daily stand-ups", "QA and weekly reports", "Cover for leave and holidays"], // CONFIRM
-    },
+    { title: "Hire through Ucchas", text: "We find and hire the right person. You manage their work." },
+    { title: "Fully managed team", text: "We hire the team and manage it for you." },
   ],
-  roles: [
-    "Shopify developer",
-    "Front-end (React, Next.js)",
-    "Full-stack developer",
-    "Mobile developer",
-    "UI/UX designer",
-    "QA tester",
-    "E-commerce assistant",
-    "Customer support",
-  ],
-  promises: ["No upfront fees", "Monthly rolling contract", "NDA and full IP ownership"], // CONFIRM
+  roles: ["Shopify developer", "Web developer", "Mobile developer", "UI/UX designer", "QA tester", "E-commerce assistant"],
 };
 
 /* ------------------------------------------------------------------ process */
 
 export const PROCESS = [
-  { title: "Discover", when: "Day 1", text: "A free 30-minute call about your goals, project and budget." },
-  { title: "Plan", when: "Week 1", text: "A written scope, timeline and fixed quote." }, // CONFIRM
-  { title: "Design & build", when: "Weeks 2–8", text: "Weekly demos on a staging site you can click through." },
-  { title: "Launch", when: "Launch week", text: "Testing on real devices, a safe go-live and hands-on support." },
-  { title: "Grow", when: "Ongoing", text: "Support, maintenance and new features, month by month." },
+  { title: "Talk", when: "Day 1", text: "A free call about your idea." },
+  { title: "Plan", when: "Week 1", text: "A clear plan and a fixed price." }, // CONFIRM
+  { title: "Build", when: "Weeks 2–8", text: "Weekly updates you can see." },
+  { title: "Launch", when: "Then", text: "We go live and keep supporting you." },
 ];
 
 /* ------------------------------------------------------------------ team */
@@ -166,12 +118,12 @@ export const PROCESS = [
  * `linkedin`) for real people; until a name is set, the card shows the role on its own.
  */
 export const TEAM: { name: string; role: string; focus: string; photo?: string; linkedin?: string }[] = [
-  { name: "", role: "Founder & CEO", focus: "Strategy, partnerships and client success" },
-  { name: "", role: "CTO", focus: "Architecture, code quality and security" },
-  { name: "", role: "Shopify lead", focus: "Shopify stores, apps and Shopify Plus" },
-  { name: "", role: "Design lead", focus: "UI/UX, brand and design systems" },
-  { name: "", role: "Project manager", focus: "Timelines, communication and delivery" },
-  { name: "", role: "Talent lead", focus: "Remote hiring, onboarding and team operations" },
+  { name: "", role: "Founder & CEO", focus: "Strategy and clients" },
+  { name: "", role: "CTO", focus: "Technology and quality" },
+  { name: "", role: "Shopify lead", focus: "Shopify stores and apps" },
+  { name: "", role: "Design lead", focus: "UI/UX and branding" },
+  { name: "", role: "Project manager", focus: "Planning and delivery" },
+  { name: "", role: "Talent lead", focus: "Remote hiring" },
 ];
 
 /* ------------------------------------------------------------------ testimonials */
@@ -187,22 +139,22 @@ export const TESTIMONIALS: { quote: string; name: string; role: string; company:
 export const FAQ = [
   {
     q: "What does Ucchas do?",
-    a: "We're an IT company. Most of our work is Shopify stores, e-commerce development and remote hiring, and we also build websites, web apps, mobile apps and custom software.",
+    a: "We build Shopify stores, e-commerce sites, websites and apps, and help companies hire remote talent.",
   },
   {
     q: "How much does a project cost?",
-    a: "It depends on the scope. After a free 30-minute call we send a written scope with a fixed price, so you know the cost before any work starts.",
+    a: "It depends on the work. After a free call, we send you a clear, fixed price.",
   },
   {
     q: "How long does a project take?",
-    a: "A website or a theme-based store can launch in a few weeks. Custom builds, apps and migrations usually take one to three months. You get a timeline with the quote.",
+    a: "Most websites and stores take a few weeks. Bigger projects take one to three months.",
   },
   {
     q: "How does remote hiring work?",
-    a: "Tell us the role, we send a shortlist of vetted candidates, you interview them and start with a trial. We handle contracts and payroll, and can manage the person day to day if you'd like.",
+    a: "Tell us the role. We send checked candidates, you choose, and we handle the contract and pay.",
   },
   {
     q: "Do you help after launch?",
-    a: "Yes. Most clients keep a monthly plan for support, maintenance and new features, and can pause or cancel it any time.",
+    a: "Yes. We offer monthly support for fixes and updates.",
   },
 ];

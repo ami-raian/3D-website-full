@@ -1,6 +1,6 @@
 import Track from "./Track";
 import { vars } from "@/lib/css";
-import { FAQ, SITE } from "@/lib/site";
+import { FAQ } from "@/lib/site";
 
 /**
  * Questions buyers actually ask. Native <details> elements: keyboard and screen-reader friendly,
@@ -15,7 +15,7 @@ export default function Faq() {
           Good <em>questions</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Something else on your mind? Ask us directly. {SITE.replyTime}.
+          Something else on your mind? Just ask us.
         </p>
         <a className="link-arrow rise" style={vars({ "--i": 3 })} href="#contact">
           Ask a question <span aria-hidden>→</span>

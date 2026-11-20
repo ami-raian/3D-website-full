@@ -3,7 +3,7 @@ import { vars } from "@/lib/css";
 
 // *word* = highlighted
 const TEXT =
-  "Ucchas is a team of engineers and designers. We build *Shopify* stores, *e-commerce* platforms, websites and apps, and find the *remote* talent to grow them, with senior people you can talk to *directly.*";
+  "We are a team of engineers and designers. We build *Shopify* stores, *e-commerce* sites and apps, and find *remote* talent for growing teams.";
 
 /** The "about Ucchas" statement: words light up one by one as you scroll. */
 export default function Story() {

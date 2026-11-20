@@ -22,8 +22,7 @@ export default function Services() {
           What we <em>do</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Shopify, e-commerce and remote hiring are our main work. We also design and build websites, apps and custom
-          software.
+          Our main work is Shopify, e-commerce and remote hiring. We also build websites and apps.
         </p>
       </Track>
 
@@ -37,10 +36,7 @@ export default function Services() {
             style={vars({ "--i": i % 3 })}
           >
             <div className="tile-text">
-              <div className="tile-top">
-                <LineIcon name={s.icon} />
-                {s.main && <span className="tile-badge">Core service</span>}
-              </div>
+              <LineIcon name={s.icon} />
               <h3>
                 {s.href ? (
                   // the link covers the whole tile (see .is-link in the CSS)
@@ -52,13 +48,6 @@ export default function Services() {
                 )}
               </h3>
               <p>{s.text}</p>
-              {s.tags && (
-                <ul className="tile-tags">
-                  {s.tags.map((t) => (
-                    <li key={t}>{t}</li>
-                  ))}
-                </ul>
-              )}
             </div>
             {s.main && <ServiceArt kind={s.main} />}
           </Track>

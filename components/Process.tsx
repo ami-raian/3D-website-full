@@ -2,7 +2,7 @@ import Track from "./Track";
 import { vars } from "@/lib/css";
 import { PROCESS } from "@/lib/site";
 
-/** How a project runs: five steps on a line that draws itself as you scroll. */
+/** How a project runs: four steps on a line that draws itself as you scroll. */
 export default function Process() {
   return (
     <Track name="process" id="process" className="section process">
@@ -12,7 +12,7 @@ export default function Process() {
           From first call to <em>launch</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          A clear plan, a fixed price and working software you can click through every week, not a surprise at the end.
+          A simple process with a clear price and weekly updates.
         </p>
       </Track>
 

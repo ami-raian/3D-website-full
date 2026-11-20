@@ -17,7 +17,7 @@
   --max: 75rem; /* 1200px, a little more on big screens (see html font-size) */
   --gutter: max(var(--pad), calc((100% - var(--max)) / 2));
   /* the one gap between sections */
-  --space: clamp(4rem, 10vh, 7rem);
+  --space: clamp(3rem, 8vh, 5.5rem);
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   /* Syne gets wider as it gets bolder; 600 keeps headlines strong without shouting */
   --display: 600;
@@ -117,7 +117,7 @@ em {
 }
 
 .h2 {
-  font-size: clamp(1.9rem, 3.3vw, 3.4rem);
+  font-size: clamp(1.55rem, 3vw, 3rem);
   font-weight: var(--display);
   line-height: 0.95;
   letter-spacing: -0.04em;
@@ -384,15 +384,15 @@ em {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
   align-items: end;
-  gap: 1.2rem 4rem;
-  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+  gap: 1rem 4rem;
+  margin-bottom: clamp(1.4rem, 4vh, 2.5rem);
 }
 .sec-head .kicker {
   grid-column: 1 / -1;
 }
 .lead {
   max-width: 40ch;
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  font-size: clamp(0.95rem, 1.1vw, 1.08rem);
   color: var(--muted);
 }
 
@@ -523,7 +523,7 @@ em {
   padding: calc(5rem + clamp(1.5rem, 7vh, 4.5rem)) var(--gutter) 0;
 }
 .about-title {
-  font-size: clamp(2.2rem, min(5.4vw, 10svh), 5.6rem);
+  font-size: clamp(2rem, min(5vw, 9.5svh), 5rem);
   font-weight: var(--display);
   line-height: 0.92;
   letter-spacing: -0.045em;
@@ -559,7 +559,7 @@ em {
 }
 .stat strong {
   display: block;
-  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
+  font-size: clamp(1.45rem, 2.3vw, 2.3rem);
   font-variant-numeric: tabular-nums;
   font-weight: var(--display);
   line-height: 1;
@@ -577,9 +577,9 @@ em {
 /* taller = more scroll per word. The pinned box is shorter than the screen and held in its
    middle, so there's no half-screen of empty space above and below the paragraph */
 .story {
-  --sh: min(100svh, 22rem);
+  --sh: min(100svh, 18rem);
   position: relative;
-  height: 150vh;
+  height: 125vh;
 }
 .story-sticky {
   position: sticky;
@@ -594,7 +594,7 @@ em {
 /* the full content width: fewer, longer lines, so the paragraph takes less scrolling */
 .story-text {
   max-width: none;
-  font-size: clamp(1.3rem, 2.3vw, 2.3rem);
+  font-size: clamp(1.2rem, 2.1vw, 2.1rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -654,7 +654,7 @@ em {
 }
 .tilt h3 {
   margin: 0.4rem 0 0.9rem;
-  font-size: clamp(1.35rem, 1.8vw, 1.85rem);
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
   font-weight: var(--display);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -749,12 +749,6 @@ em {
   );
 }
 
-.tile-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
 .tile .line-icon {
   --size: 38px;
   padding: 8px;
@@ -762,18 +756,8 @@ em {
   background: rgba(var(--accent, 183, 156, 255), 0.1);
   stroke: rgb(var(--accent, 201, 184, 255));
 }
-.tile-badge {
-  padding: 0.35rem 0.65rem;
-  border: 1px solid rgba(var(--accent), 0.3);
-  border-radius: 999px;
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgb(var(--accent));
-}
 .tile h3 {
-  margin: 1rem 0 0.45rem;
+  margin: 0.9rem 0 0.35rem;
   font-size: clamp(1.05rem, 1.3vw, 1.3rem);
   font-weight: var(--display);
   line-height: 1.1;
@@ -781,26 +765,12 @@ em {
   text-transform: uppercase;
 }
 .tile-shopify h3 {
-  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
 }
 .tile p {
   max-width: 42ch;
   font-size: 0.9rem;
   color: var(--muted);
-}
-.tile-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.9rem;
-}
-.tile-tags li {
-  padding: 0.3rem 0.65rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 0.74rem;
-  color: rgba(242, 240, 236, 0.82);
-  background: rgba(255, 255, 255, 0.03);
 }
 @media (hover: hover) {
   .tile.is-link:hover {
@@ -812,7 +782,7 @@ em {
 .art-store {
   position: relative;
   flex: 1;
-  min-height: 14rem;
+  min-height: 12rem;
   margin-bottom: -2.2rem;
 }
 .mock {
@@ -1230,7 +1200,7 @@ em {
     flex-direction: column;
   }
   .art-store {
-    min-height: 15rem;
+    min-height: 13rem;
   }
   .art-stat {
     width: 8.4rem;
@@ -1253,7 +1223,7 @@ em {
   /* the strip is a loop this long: after the last card the first comes round again */
   --loop: calc(var(--cards) * var(--step));
   position: relative;
-  height: 280vh;
+  height: 240vh;
 }
 /* heading, cards and progress line stay together as one group, centred on screen below the nav */
 .work-sticky {
@@ -1291,7 +1261,7 @@ em {
   padding: 0 var(--gutter);
 }
 .work-head .h2 {
-  font-size: clamp(1.9rem, 3.4vw, 3.5rem);
+  font-size: clamp(1.55rem, 3vw, 3rem);
 }
 .work-stage {
   position: relative;
@@ -1383,7 +1353,7 @@ em {
 }
 .card h3 {
   margin: 0.3rem 0 0.5rem;
-  font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
   font-weight: var(--display);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -1466,7 +1436,7 @@ em {
   align-items: center;
   gap: 2.4rem;
   padding-right: 2.4rem;
-  font-size: clamp(1.6rem, 3.4vw, 3.2rem);
+  font-size: clamp(1.3rem, 2.8vw, 2.7rem);
   font-weight: var(--display);
   letter-spacing: -0.035em;
   line-height: 1.1;
@@ -1609,10 +1579,7 @@ em {
   perspective: 1400px;
 }
 .hire-roles {
-  margin-top: clamp(2rem, 5vh, 3rem);
-}
-.hire-roles .kicker {
-  margin-bottom: 0.9rem;
+  margin-top: clamp(1.2rem, 3vh, 1.8rem);
 }
 .role-list {
   display: flex;
@@ -1634,19 +1601,19 @@ em {
   align-items: center;
   justify-content: space-between;
   gap: 1rem 2rem;
-  margin-top: clamp(1.6rem, 4vh, 2.4rem);
-  padding: clamp(1rem, 1.6vw, 1.3rem) clamp(1.1rem, 2vw, 1.6rem);
+  margin-top: clamp(1.2rem, 3vh, 1.8rem);
+  padding: clamp(0.9rem, 1.4vw, 1.1rem) clamp(1.1rem, 2vw, 1.6rem);
   border: 1px solid rgba(183, 156, 255, 0.25);
   border-radius: 20px;
   background:
     radial-gradient(120% 160% at 100% 0%, rgba(183, 156, 255, 0.16), transparent 60%),
     rgba(255, 255, 255, 0.03);
 }
-.hire-cta .checks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.6rem;
-  margin: 0;
+.hire-cta p {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-weight: var(--display);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 /* ---------- process ---------- */
@@ -1655,7 +1622,7 @@ em {
 .steps {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.2rem;
   padding-top: 1.7rem;
 }
@@ -2068,7 +2035,7 @@ em {
   gap: 1.6rem;
 }
 .cta-title {
-  font-size: clamp(2rem, 3.8vw, 4.2rem);
+  font-size: clamp(1.75rem, 3.4vw, 3.6rem);
   font-weight: var(--display);
   line-height: 0.92;
   letter-spacing: -0.045em;
@@ -2503,7 +2470,7 @@ em {
     --gap: 5;
     --ch: min(52svh, 98vw);
     /* wide cards travel further, so give them a little more scroll */
-    height: 320vh;
+    height: 270vh;
   }
 }
 
@@ -2528,10 +2495,10 @@ em {
     display: none;
   }
   .story {
-    height: 140vh;
+    height: 120vh;
   }
   .story-text {
-    font-size: clamp(1.25rem, min(5vw, 5.6svh), 2rem);
+    font-size: clamp(1.1rem, min(4.4vw, 5svh), 1.7rem);
   }
   .foot-bar {
     flex-wrap: wrap;
@@ -2543,11 +2510,11 @@ em {
     grid-template-columns: 1fr;
   }
   .about-title {
-    font-size: clamp(2.2rem, min(12.5vw, 8svh), 4rem);
+    font-size: clamp(1.9rem, min(10.5vw, 7svh), 3.2rem);
   }
   /* narrow screens wrap the paragraph onto more lines, so its pinned box is taller */
   .story {
-    --sh: min(100svh, 31rem);
+    --sh: min(100svh, 22rem);
   }
   .contact-list div {
     grid-template-columns: 1fr;
@@ -2606,7 +2573,7 @@ em {
     padding-top: calc(var(--pad) + 3rem);
   }
   .about-title {
-    font-size: clamp(1.9rem, min(6.4vw, 12svh), 4rem);
+    font-size: clamp(1.7rem, min(5.6vw, 11svh), 3.4rem);
   }
   .work {
     --cw: 36;

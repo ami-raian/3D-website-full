@@ -1,45 +1,24 @@
 import {
   siBigcommerce,
   siDocker,
-  siElasticsearch,
-  siExpo,
   siFigma,
   siFirebase,
   siFlutter,
   siGithub,
-  siGithubactions,
-  siGo,
   siGooglecloud,
-  siGraphql,
-  siJira,
   siKotlin,
-  siKubernetes,
   siLaravel,
-  siLinear,
-  siMongodb,
-  siNestjs,
   siNextdotjs,
   siNodedotjs,
-  siNotion,
   siPaypal,
-  siPhp,
-  siPostgresql,
-  siPython,
-  siPytorch,
   siReact,
-  siRedis,
   siShopify,
   siStripe,
-  siSupabase,
   siSwift,
   siTailwindcss,
-  siTerraform,
-  siThreedotjs,
   siTypescript,
   siVercel,
-  siVuedotjs,
   siWoocommerce,
-  siZoom,
 } from "simple-icons";
 import Marquee from "./Marquee";
 import StackTabs, { type StackGroup, type StackTool } from "./StackTabs";
@@ -72,26 +51,14 @@ const STACK: StackGroup[] = [
     ],
   },
   {
-    area: "Frontend",
+    area: "Web",
     tools: [
       tool("Next.js", siNextdotjs),
       tool("React", siReact),
       tool("TypeScript", siTypescript),
       tool("Tailwind CSS", siTailwindcss),
-      tool("Vue.js", siVuedotjs),
-      tool("Three.js", siThreedotjs),
-    ],
-  },
-  {
-    area: "Backend",
-    tools: [
       tool("Node.js", siNodedotjs),
-      tool("NestJS", siNestjs),
-      tool("Python", siPython),
-      tool("Go", siGo),
-      tool("GraphQL", siGraphql),
       tool("Laravel", siLaravel),
-      tool("PHP", siPhp),
     ],
   },
   {
@@ -101,43 +68,18 @@ const STACK: StackGroup[] = [
       tool("Flutter", siFlutter),
       tool("Swift", siSwift),
       tool("Kotlin", siKotlin),
-      tool("Expo", siExpo),
       tool("Firebase", siFirebase),
     ],
   },
   {
-    area: "Cloud & DevOps",
+    area: "Cloud & tools",
     tools: [
       named("AWS", "AWS"),
       tool("Google Cloud", siGooglecloud),
       tool("Docker", siDocker),
-      tool("Kubernetes", siKubernetes),
-      tool("Terraform", siTerraform),
-      tool("GitHub Actions", siGithubactions),
       tool("Vercel", siVercel),
-    ],
-  },
-  {
-    area: "Data & AI",
-    tools: [
-      tool("PostgreSQL", siPostgresql),
-      tool("MongoDB", siMongodb),
-      tool("Redis", siRedis),
-      tool("Supabase", siSupabase),
-      tool("Elasticsearch", siElasticsearch),
-      tool("PyTorch", siPytorch),
-    ],
-  },
-  {
-    area: "Remote teams",
-    tools: [
-      tool("Jira", siJira),
-      named("Slack", "Sl"),
-      tool("Notion", siNotion),
       tool("GitHub", siGithub),
       tool("Figma", siFigma),
-      tool("Linear", siLinear),
-      tool("Zoom", siZoom),
     ],
   },
 ];
@@ -151,8 +93,7 @@ export default function Technologies() {
           Tools we <em>trust</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Proven, well-supported tools, chosen for your problem and your team, so the software stays easy to hire for
-          and easy to change.
+          Modern, reliable tools that keep your product fast and easy to grow.
         </p>
       </Track>
 

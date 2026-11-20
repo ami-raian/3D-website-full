@@ -14,8 +14,7 @@ export default function Contact() {
             your <em>project.</em>
           </h2>
           <p className="lead">
-            Tell us about your project or the role you need to fill. We&apos;ll come back with
-            questions, a rough plan and an honest estimate.
+            Tell us about your project or the role you need. We&apos;ll get back to you within one business day.
           </p>
           <dl className="contact-list">
             <div>

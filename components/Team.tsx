@@ -23,8 +23,7 @@ export default function Team() {
           The people you&apos;ll <em>work with</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Engineers, designers and recruiters. You talk to the people building your product, not a chain of account
-          managers.
+          Engineers, designers and recruiters you can talk to directly.
         </p>
       </Track>
 
