@@ -7,8 +7,10 @@ export type StackTool = {
   name: string;
   /** SVG path on a 24×24 grid; tools without a logo show `mono` instead */
   path?: string;
+  /** crop for logos that don't fill the 24×24 grid */
+  viewBox?: string;
   mono?: string;
-  /** hover colour (the brand colour, or the page colour for very dark brands) */
+  /** the logo's colour (the brand colour, or white for black logos) */
   color: string;
 };
 export type StackGroup = { area: string; tools: StackTool[] };
@@ -71,7 +73,7 @@ export default function StackTabs({ groups }: { groups: StackGroup[] }) {
             {g.tools.map((t, j) => (
               <li key={t.name} className="tool" style={vars({ "--c": t.color, "--i": j })}>
                 {t.path ? (
-                  <svg viewBox="0 0 24 24" aria-hidden>
+                  <svg viewBox={t.viewBox ?? "0 0 24 24"} aria-hidden>
                     <path d={t.path} />
                   </svg>
                 ) : (

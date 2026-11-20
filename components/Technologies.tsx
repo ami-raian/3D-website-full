@@ -29,25 +29,34 @@ const TICKER = ["Shopify", "Next.js", "TypeScript", "WooCommerce", "Node.js", "R
 
 type Icon = { path: string; hex: string };
 
-/** a logo tile; brands too dark to see on this page hover in the page colour instead */
-const tool = (name: string, icon: Icon): StackTool => {
+/**
+ * A logo tile in the brand's colour. Black logos (Next.js, Vercel, GitHub, BigCommerce) show in
+ * white, as those brands do on dark backgrounds. `color` picks another official brand colour
+ * where the main one is too dark to see here; `viewBox` crops a logo to its mark.
+ */
+const tool = (name: string, icon: Icon, opts: { color?: string; viewBox?: string } = {}): StackTool => {
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(icon.hex.slice(i, i + 2), 16) / 255);
   const light = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return { name, path: icon.path, color: light < 0.22 ? "#f2f0ec" : `#${icon.hex}` };
+  return {
+    name,
+    path: icon.path,
+    viewBox: opts.viewBox,
+    color: opts.color ?? (light < 0.12 ? "#f2f0ec" : `#${icon.hex}`),
+  };
 };
-/** a tile for tools that have no logo in the icon set */
-const named = (name: string, mono: string): StackTool => ({ name, mono, color: "#b79cff" });
+/** a tile for tools that have no logo in the icon set: letters in the brand colour */
+const named = (name: string, mono: string, color: string): StackTool => ({ name, mono, color });
 
 const STACK: StackGroup[] = [
   {
     area: "E-commerce",
     tools: [
       tool("Shopify", siShopify),
-      tool("WooCommerce", siWoocommerce),
+      tool("WooCommerce", siWoocommerce, { viewBox: "-0.35 7.6 8.8 8.8" }),
       tool("BigCommerce", siBigcommerce),
-      named("Magento", "Mg"),
+      named("Magento", "Mg", "#EE672F"),
       tool("Stripe", siStripe),
-      tool("PayPal", siPaypal),
+      tool("PayPal", siPaypal, { color: "#009CDE" }),
     ],
   },
   {
@@ -65,16 +74,16 @@ const STACK: StackGroup[] = [
     area: "Mobile",
     tools: [
       tool("React Native", siReact),
-      tool("Flutter", siFlutter),
+      tool("Flutter", siFlutter, { color: "#47C5FB" }),
       tool("Swift", siSwift),
       tool("Kotlin", siKotlin),
-      tool("Firebase", siFirebase),
+      tool("Firebase", siFirebase, { color: "#FFCA28" }),
     ],
   },
   {
     area: "Cloud & tools",
     tools: [
-      named("AWS", "AWS"),
+      named("AWS", "AWS", "#FF9900"),
       tool("Google Cloud", siGooglecloud),
       tool("Docker", siDocker),
       tool("Vercel", siVercel),
