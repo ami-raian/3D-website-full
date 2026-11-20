@@ -4,7 +4,7 @@ import { useEffect, useRef, type CSSProperties, type ElementType, type ReactNode
 import { engine, type TrackMode } from "@/lib/engine";
 
 type Props = {
-  as?: "section" | "header" | "footer" | "div";
+  as?: "section" | "header" | "footer" | "div" | "ol" | "ul";
   mode?: TrackMode;
   /** lets other code look this section up with engine.find() */
   name?: string;

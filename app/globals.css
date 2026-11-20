@@ -76,7 +76,8 @@ button {
   border: 0;
   cursor: pointer;
 }
-ul {
+ul,
+ol {
   list-style: none;
 }
 ::selection {
@@ -159,6 +160,24 @@ em {
   background: var(--iri);
   transform: scaleX(0);
   transform-origin: 0 50%;
+}
+
+/* sits under the nav (and under the open menu); fades in once the page scrolls */
+.nav-shade {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 44;
+  height: var(--nav-h, 5rem);
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(7, 7, 11, 0.9), rgba(7, 7, 11, 0.72));
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease, ease);
+}
+.nav-shade.is-on {
+  opacity: 1;
 }
 
 .nav {
@@ -674,11 +693,8 @@ em {
   margin-bottom: 0.8rem;
   padding-right: 2rem;
 }
-.svc-head .svc-icon {
+.svc-head .line-icon {
   flex: none;
-  width: 42px;
-  height: 42px;
-  margin: 0;
 }
 .svc-num {
   position: absolute;
@@ -728,10 +744,10 @@ em {
   padding: 1rem 1.1rem;
   border-radius: 16px;
 }
-.svc-more .svc-icon {
-  width: 36px;
-  height: 36px;
-  margin: 0;
+.svc-more .line-icon {
+  --size: 36px;
+  padding: 7px;
+  border-radius: 10px;
 }
 .svc-more .tilt h3 {
   margin: 0.1rem 0 0.3rem;
@@ -742,210 +758,13 @@ em {
   line-height: 1.45;
 }
 
-/* small animated icons, pure CSS */
-.svc-icon {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 1.4rem;
-}
-.svc-icon span {
-  position: absolute;
-}
-.i-spark span {
-  width: 100%;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--iri);
-  animation: spin 9s linear infinite;
-}
-.i-spark span:nth-child(2) {
-  animation-direction: reverse;
-  animation-duration: 6s;
-}
-.i-cube span {
-  width: 60%;
-  height: 60%;
-  border: 1.5px solid #b79cff;
-  border-radius: 8px;
-  animation: spin 10s linear infinite;
-}
-.i-cube span:nth-child(2) {
-  width: 34%;
-  height: 34%;
-  border-color: #ffc48a;
-  animation-direction: reverse;
-}
-.i-orbit span:nth-child(1) {
-  inset: 6px;
-  border: 1.5px solid rgba(143, 211, 255, 0.6);
-  border-radius: 50%;
-}
-.i-orbit span:nth-child(2) {
-  inset: 0;
-  animation: spin 4s linear infinite;
-}
-.i-orbit span:nth-child(2)::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  margin-left: -5px;
-  border-radius: 50%;
-  background: #ff9ccf;
-  box-shadow: 0 0 14px #ff9ccf;
-}
-.i-grid span {
-  width: 46%;
-  height: 46%;
-  border: 1.5px solid #8fd3ff;
-  border-radius: 8px;
-  translate: -24% -24%;
-}
-.i-grid span:nth-child(2) {
-  border-color: #ff9ccf;
-  translate: 24% 24%;
-  animation: pulse 3.2s ease-in-out infinite;
-}
-.i-wave span {
-  left: 0;
-  width: 100%;
-  height: 40%;
-  border-top: 2px solid #8fd3ff;
-  border-radius: 50%;
-  animation: sway 5s ease-in-out infinite;
-}
-.i-wave span:nth-child(1) {
-  top: 22%;
-}
-.i-wave span:nth-child(2) {
-  top: 48%;
-  border-color: #ffc48a;
-  animation-delay: -2.5s;
-}
-.i-layers span {
-  width: 58%;
-  height: 58%;
-  border: 1.5px solid #b79cff;
-  border-radius: 6px;
-  transform: rotateX(58deg) rotateZ(45deg);
-  translate: 0 8px;
-}
-.i-layers span:nth-child(2) {
-  border-color: #ffc48a;
-  translate: 0 -6px;
-  animation: lift 3.4s ease-in-out infinite;
-}
-/* code brackets < > (Shopify development) */
-.i-code span {
-  width: 30%;
-  height: 30%;
-  border: solid #8fd3ff;
-  border-width: 0 0 2px 2px;
-  border-radius: 2px;
-  translate: -62% 0;
-  rotate: 45deg;
-}
-.i-code span:nth-child(2) {
-  border-color: #ff9ccf;
-  translate: 62% 0;
-  rotate: -135deg;
-  animation: pulse 3s ease-in-out infinite;
-}
-/* rising bars (Shopify growth) */
-.i-chart span {
-  bottom: 18%;
-  width: 18%;
-  border-radius: 3px 3px 1px 1px;
-  transform-origin: 50% 100%;
-}
-.i-chart span:nth-child(1) {
-  left: 28%;
-  height: 38%;
-  background: #8fd3ff;
-}
-.i-chart span:nth-child(2) {
-  left: 54%;
-  height: 64%;
-  background: linear-gradient(#ff9ccf, #b79cff);
-  animation: pulse 3.2s ease-in-out infinite;
-}
-/* shopping bag (Shopify setup) */
-.i-bag span:nth-child(1) {
-  top: 38%;
-  width: 62%;
-  height: 52%;
-  border: 1.5px solid #8fd3ff;
-  border-radius: 4px 4px 12px 12px;
-}
-.i-bag span:nth-child(2) {
-  top: 14%;
-  width: 30%;
-  height: 30%;
-  border: 1.5px solid #ff9ccf;
-  border-bottom: 0;
-  border-radius: 999px 999px 0 0;
-  animation: lift 3s ease-in-out infinite;
-}
-/* price tag (e-commerce), swinging */
-.i-tag span:nth-child(1) {
-  width: 50%;
-  height: 50%;
-  border: 1.5px solid #b79cff;
-  border-radius: 10px 2px 10px 10px;
-  rotate: 45deg;
-  animation: sway 4s ease-in-out infinite;
-}
-.i-tag span:nth-child(2) {
-  top: 28%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ffc48a;
-  box-shadow: 0 0 12px #ffc48a;
-}
-/* team network (remote management): a core with a dashed, turning ring */
-.i-team span:nth-child(1) {
-  width: 28%;
-  height: 28%;
-  border-radius: 50%;
-  background: var(--iri);
-  box-shadow: 0 0 18px rgba(183, 156, 255, 0.6);
-}
-.i-team span:nth-child(2) {
-  inset: 4px;
-  border: 1.5px dashed rgba(143, 211, 255, 0.75);
-  border-radius: 50%;
-  animation: spin 12s linear infinite;
-}
-/* magnifier (hiring) */
-.i-hire span:nth-child(1) {
-  width: 52%;
-  height: 52%;
-  border: 2px solid #ff9ccf;
-  border-radius: 50%;
-  translate: -12% -12%;
-  animation: pulse 3.2s ease-in-out infinite;
-}
-.i-hire span:nth-child(2) {
-  top: 64%;
-  left: 62%;
-  width: 30%;
-  height: 2px;
-  border-radius: 2px;
-  background: #ffc48a;
-  rotate: 45deg;
-  transform-origin: 0 50%;
-}
-
 /* ---------- work (horizontal 3D gallery) ---------- */
 
 /* taller = slower gallery */
 .work {
+  /* the pinned gallery centres itself on screen, which leaves extra empty space above and
+     below it: tuck the neighbouring sections in a little */
+  margin-block: calc(-1 * clamp(1.5rem, 7vh, 4.5rem));
   /* card width (vw), gap between cards (vw) and card height */
   --cw: 22;
   --gap: 3.5;
@@ -1178,6 +997,573 @@ em {
 .marquee i {
   font-size: 0.5em;
   font-style: normal;
+}
+
+/* ---------- why Ucchas (follows the word-by-word statement) ---------- */
+
+.why.section {
+  padding-top: clamp(1rem, 4vh, 2.5rem);
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+.why-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.2rem, 1.8vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+    rgba(10, 10, 16, 0.55);
+  transition: border-color 0.4s;
+}
+/* a thin gradient edge lights up along the top on hover */
+.why-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--iri);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+@media (hover: hover) {
+  .why-card:hover {
+    border-color: rgba(183, 156, 255, 0.35);
+  }
+  .why-card:hover::before {
+    opacity: 1;
+  }
+}
+/* line icons in a soft tile (why cards, services) */
+.line-icon {
+  flex: none;
+  width: var(--size, 42px);
+  height: var(--size, 42px);
+  padding: 9px;
+  border: 1px solid rgba(183, 156, 255, 0.22);
+  border-radius: 12px;
+  background: rgba(183, 156, 255, 0.08);
+  fill: none;
+  stroke: #c9b8ff;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.why-card .line-icon {
+  margin-bottom: 1rem;
+}
+.why-card h3 {
+  margin-bottom: 0.45rem;
+  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
+  font-weight: var(--display);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.why-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- shared bits: stage labels, green check lists, whole-card links ---------- */
+
+.svc-phase {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b79cff;
+}
+/* Shopify stages: two big cards per row, each list in two columns */
+.svc-grid.svc-core.svc-four {
+  grid-template-columns: repeat(2, 1fr);
+}
+.svc-four .svc-points {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.checks {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+.checks li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: rgba(242, 240, 236, 0.86);
+}
+.checks li::before {
+  content: "";
+  position: absolute;
+  top: 0.12em;
+  left: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50%;
+  background: rgba(95, 242, 168, 0.12)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.6L12 5.5' fill='none' stroke='%235ff2a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 70% no-repeat;
+}
+/* a card whose title link covers the whole card */
+.is-link h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.is-link h3 a span {
+  display: inline-block;
+  transition: transform 0.3s var(--ease);
+}
+@media (hover: hover) {
+  .tilt.is-link:hover {
+    border-color: rgba(183, 156, 255, 0.4);
+  }
+  .is-link:hover h3 a span {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- remote hiring ---------- */
+
+.hire-modes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+  perspective: 1400px;
+}
+.hire-roles {
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+.hire-roles .kicker {
+  margin-bottom: 0.9rem;
+}
+.role-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.role-list li {
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.03);
+}
+/* the four steps, as one strip of panels */
+.hire-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: clamp(2rem, 5vh, 3rem);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--line);
+}
+.hire-steps li {
+  padding: clamp(1.1rem, 1.6vw, 1.5rem);
+  background: #0c0b14;
+}
+.hire-steps h3,
+.hire-list h3 {
+  font-size: 1.02rem;
+  font-weight: var(--display);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.hire-steps h3 {
+  margin: 0.5rem 0 0.35rem;
+}
+.hire-steps p {
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.hire-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.1fr;
+  align-items: start;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  margin-top: clamp(1.6rem, 4vh, 2.4rem);
+}
+.hire-list .checks {
+  margin-top: 0.8rem;
+}
+.hire-cta {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  padding: clamp(1.2rem, 1.8vw, 1.5rem);
+  border: 1px solid rgba(183, 156, 255, 0.25);
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 120% at 100% 0%, rgba(183, 156, 255, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.03);
+}
+.hire-cta p {
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-weight: var(--display);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* ---------- process + ways to work together ---------- */
+
+/* the steps sit on a line that fills with the brand gradient as you scroll down */
+.steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.2rem;
+  padding-top: 1.7rem;
+}
+.steps::before,
+.steps::after {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--faint);
+}
+.steps::after {
+  background: var(--iri);
+  transform-origin: 0 50%;
+  transform: scaleX(clamp(0, calc(var(--p) * 1.7 - 0.25), 1));
+}
+.step {
+  position: relative;
+}
+.step-dot {
+  position: absolute;
+  z-index: 1;
+  top: -1.7rem;
+  left: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid #b79cff;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 0 14px rgba(183, 156, 255, 0.55);
+}
+.step-when {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b79cff;
+}
+.step h3 {
+  margin-bottom: 0.4rem;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  font-weight: var(--display);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.step h3 .step-num {
+  margin-right: 0.25rem;
+}
+.step p {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.3rem, 2vw, 1.7rem);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)),
+    rgba(10, 10, 16, 0.6);
+  transition: border-color 0.4s;
+}
+@media (hover: hover) {
+  .plan:hover {
+    border-color: rgba(183, 156, 255, 0.35);
+  }
+}
+.plan h3 {
+  font-size: 1.1rem;
+  font-weight: var(--display);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.plan-price {
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  font-weight: var(--display);
+  letter-spacing: -0.03em;
+  color: transparent;
+  background: var(--iri);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.plan-price span {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.plan-note {
+  margin-top: -0.4rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.plan > p:not(.plan-price, .plan-note) {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.plan .checks {
+  flex: 1;
+  align-content: start;
+  margin-top: 0.2rem;
+}
+.plan .link-arrow {
+  align-self: flex-start;
+  margin-top: 0.4rem;
+}
+
+/* ---------- team ---------- */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+.member {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+    rgba(10, 10, 16, 0.55);
+}
+/* portrait (or initials / number) inside a gradient ring */
+.member-photo {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  padding: 2px;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, #8fd3ff, #b79cff, #ff9ccf, #ffc48a, #8fd3ff);
+}
+.member-photo span,
+.member-photo img {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #0e0c18;
+}
+.member-info {
+  min-width: 0;
+}
+.member-info h3 {
+  font-size: 1rem;
+  font-weight: var(--display);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.member-role {
+  font-size: 0.8rem;
+  color: #b79cff;
+}
+.member-focus {
+  margin-top: 0.15rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+.member-link {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.9rem;
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+  transition:
+    color 0.3s,
+    border-color 0.3s;
+}
+@media (hover: hover) {
+  .member-link:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+  }
+}
+
+/* ---------- testimonials (shown once real quotes exist) ---------- */
+
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+.quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: clamp(1.3rem, 2vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+    rgba(10, 10, 16, 0.55);
+}
+.quote blockquote p {
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+.quote-by {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.quote-by img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.quote-by strong {
+  display: block;
+  font-size: 0.92rem;
+}
+.quote-by span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+/* the heading stays beside the questions while you read them */
+.faq-side {
+  position: sticky;
+  top: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+.faq-list {
+  display: grid;
+  gap: 0.6rem;
+}
+.faq-list details {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+  interpolate-size: allow-keywords;
+}
+.faq-list details[open] {
+  border-color: rgba(183, 156, 255, 0.35);
+  background: rgba(183, 156, 255, 0.05);
+}
+.faq-list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+/* a plus that turns into a minus */
+.faq-list summary i {
+  position: relative;
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+.faq-list summary i::before,
+.faq-list summary i::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.65rem;
+  height: 1.5px;
+  background: var(--fg);
+  translate: -50% -50%;
+  transition: transform 0.3s var(--ease);
+}
+.faq-list summary i::after {
+  transform: rotate(90deg);
+}
+.faq-list details[open] summary i::after {
+  transform: rotate(0deg);
+}
+.faq-list details p {
+  max-width: 62ch;
+  padding: 0 1.2rem 1.15rem;
+  font-size: 0.93rem;
+  color: var(--muted);
+}
+/* smooth opening, in browsers that can animate <details> (others just open instantly) */
+.faq-list details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.35s var(--ease),
+    content-visibility 0.35s allow-discrete;
+}
+.faq-list details[open]::details-content {
+  block-size: auto;
 }
 
 /* ---------- technologies ---------- */
@@ -1713,9 +2099,19 @@ em {
 
 /* ---------- responsive ---------- */
 
-@media (min-width: 901px) {
+@media (min-width: 1081px) {
   .menu {
     display: none;
+  }
+}
+
+/* six section links need room: below this the nav shows the menu button instead */
+@media (max-width: 1080px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-menu {
+    display: block;
   }
 }
 
@@ -1734,12 +2130,6 @@ em {
   }
   .svc-points {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .nav-links {
-    display: none;
-  }
-  .nav-menu {
-    display: block;
   }
   .sec-head {
     grid-template-columns: 1fr;
@@ -1886,6 +2276,83 @@ em {
   .card-sum,
   .card-tags {
     display: none;
+  }
+}
+
+/* ---------- new sections on tablets and phones ---------- */
+
+@media (max-width: 900px) {
+  .why-grid,
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .svc-grid.svc-core.svc-four,
+  .plans {
+    grid-template-columns: 1fr;
+  }
+  .hire-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hire-bottom {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hire-cta {
+    grid-column: 1 / -1;
+  }
+  /* the process line runs down the left side instead of across */
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    padding: 0 0 0 2rem;
+  }
+  .steps::before,
+  .steps::after {
+    top: 0;
+    bottom: 0;
+    left: 0.45rem;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .steps::after {
+    transform-origin: 50% 0;
+    transform: scaleY(clamp(0, calc(var(--p) * 1.4 - 0.2), 1));
+  }
+  .step-dot {
+    top: 0.1rem;
+    left: -2rem;
+  }
+  .faq {
+    grid-template-columns: 1fr;
+  }
+  .faq-side {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .why-grid,
+  .team-grid,
+  .hire-modes,
+  .hire-steps,
+  .hire-bottom {
+    grid-template-columns: 1fr;
+  }
+  .svc-four .svc-points {
+    grid-template-columns: 1fr;
+  }
+  .faq-list summary {
+    padding: 0.95rem 1rem;
+    font-size: 0.95rem;
+  }
+  .faq-list details p {
+    padding: 0 1rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .steps::after {
+    transform: none;
   }
 }
 

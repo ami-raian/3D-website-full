@@ -10,12 +10,12 @@ export default function Contact() {
         <div className="contact-info">
           <p className="kicker">( Contact )</p>
           <h2 className="cta-title">
-            Let&apos;s build <br />
-            something <em>remarkable.</em>
+            Let&apos;s talk about <br />
+            your <em>store.</em>
           </h2>
           <p className="lead">
-            Tell us what you&apos;re building. We&apos;ll come back with questions, a rough plan and an honest
-            estimate, usually within one business day.
+            Tell us about your store, your project or the role you need to fill. We&apos;ll come back with
+            questions, a rough plan and an honest estimate.
           </p>
           <dl className="contact-list">
             <div>
@@ -26,7 +26,7 @@ export default function Contact() {
             </div>
             <div>
               <dt>Working with</dt>
-              <dd>Startups and enterprises, worldwide</dd>
+              <dd>Brands and teams worldwide</dd>
             </div>
           </dl>
         </div>

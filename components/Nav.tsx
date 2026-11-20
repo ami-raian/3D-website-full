@@ -10,6 +10,8 @@ const BAR_LINKS = SECTIONS.filter((s) => s.id !== "contact");
 
 export default function Nav() {
   const bar = useRef<HTMLDivElement>(null);
+  const shade = useRef<HTMLDivElement>(null);
+  const navEl = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
 
@@ -18,7 +20,14 @@ export default function Nav() {
   useEffect(() => {
     let last = -1;
     let current = "";
+    let shaded = false;
     return engine.onTick(() => {
+      // once the page has moved, a blurred bar sits behind the nav so text never runs under it
+      const s = engine.y > 24;
+      if (s !== shaded && shade.current) {
+        shaded = s;
+        shade.current.classList.toggle("is-on", s);
+      }
       const p = Math.round(engine.progress * 1000) / 1000;
       if (p !== last && bar.current) {
         last = p;
@@ -38,6 +47,17 @@ export default function Nav() {
     });
   }, []);
 
+  // the bar behind the nav matches the nav's height, whatever the screen
+  useEffect(() => {
+    const el = navEl.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--nav-h", `${el.offsetHeight}px`);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   // while the menu is open: the page underneath can't scroll, Escape closes it
   useEffect(() => {
     if (!open) return;
@@ -54,7 +74,7 @@ export default function Nav() {
 
   // the menu only exists on small screens; close it if the window grows past that
   useEffect(() => {
-    const wide = matchMedia("(min-width: 901px)");
+    const wide = matchMedia("(min-width: 1081px)");
     const onChange = () => {
       if (wide.matches) setOpen(false);
     };
@@ -74,7 +94,8 @@ export default function Nav() {
       <div className="progress" aria-hidden>
         <div ref={bar} className="progress-bar" />
       </div>
-      <nav className="nav" aria-label="Main">
+      <div ref={shade} className="nav-shade" aria-hidden />
+      <nav ref={navEl} className="nav" aria-label="Main">
         <a href="#top" className="logo" onClick={open ? go : undefined}>
           <span className="logo-mark" aria-hidden />
           {SITE.name.toUpperCase()}

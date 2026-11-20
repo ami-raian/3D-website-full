@@ -1,16 +1,11 @@
+import LineIcon from "./LineIcon";
 import TiltCard from "./TiltCard";
 import Track from "./Track";
 import { vars } from "@/lib/css";
-import { SERVICE_GROUPS, SERVICES, type Service, type ServiceGroup } from "@/lib/site";
+import { SERVICE_GROUPS, SERVICES } from "@/lib/site";
 
-const MORE = SERVICES.filter((s) => !s.group);
-
-const Icon = ({ s }: { s: Service }) => (
-  <div className={`svc-icon i-${s.icon}`} aria-hidden>
-    <span />
-    <span />
-  </div>
-);
+const SHOPIFY = SERVICES.filter((s) => s.group === "shopify");
+const BEYOND = SERVICES.filter((s) => s.group === "beyond");
 
 /** small label + one line above a block of cards */
 const GroupHead = ({ label, text }: { label: string; text?: string }) => (
@@ -24,63 +19,65 @@ const GroupHead = ({ label, text }: { label: string; text?: string }) => (
   </Track>
 );
 
-/** a block of large cards, each with everything that is included */
-function CoreGroup({ group }: { group: ServiceGroup }) {
-  const items = SERVICES.filter((s) => s.group === group);
-  const { label, text } = SERVICE_GROUPS[group];
-  return (
-    <section className="svc-group" aria-label={label}>
-      <GroupHead label={label} text={text} />
-      <div className="svc-grid svc-core">
-        {items.map((s, i) => (
-          // each card tracks its own position, so a lower row reveals when it arrives, not with the first
-          <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 3 })}>
-            <TiltCard>
-              <span className="step-num svc-num">0{i + 1}</span>
-              <div className="svc-head">
-                <Icon s={s} />
-                <h3>{s.title}</h3>
-              </div>
-              <p>{s.text}</p>
-              <ul className="svc-points" aria-label="What's included">
-                {s.points?.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </TiltCard>
-          </Track>
-        ))}
-      </div>
-    </section>
-  );
-}
-
+/** Shopify first (four stages, everything included), then the rest of what Ucchas does. */
 export default function Services() {
   return (
     <Track name="services" id="services" className="section">
       <Track as="div" mode="enter" className="sec-head">
         <p className="kicker rise">( Services )</p>
         <h2 className="h2 rise" style={vars({ "--i": 1 })}>
-          What we <em>do</em>
+          Shopify, <em>A to Z</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Online stores that sell and remote teams that deliver, plus the engineering behind both. Pick one service or
-          hand us the whole thing.
+          Everything your store needs, from the first theme to Shopify Plus, plus the custom e-commerce, web and people
+          behind it.
         </p>
       </Track>
 
-      <CoreGroup group="shopify" />
-      <CoreGroup group="core" />
-
-      <section className="svc-group" aria-label="More we do">
-        <GroupHead label="More we do" />
-        <div className="svc-grid svc-more">
-          {MORE.map((s, i) => (
-            <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 3 })}>
+      <section className="svc-group" aria-label={SERVICE_GROUPS.shopify.label}>
+        <GroupHead {...SERVICE_GROUPS.shopify} />
+        <div className="svc-grid svc-core svc-four">
+          {SHOPIFY.map((s, i) => (
+            // each card tracks its own position, so a lower row reveals when it arrives, not with the first
+            <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 2 })}>
               <TiltCard>
-                <Icon s={s} />
-                <div>
+                <span className="svc-phase">
+                  0{i + 1} · {s.phase}
+                </span>
+                <div className="svc-head">
+                  <LineIcon name={s.icon} />
                   <h3>{s.title}</h3>
+                </div>
+                <p>{s.text}</p>
+                <ul className="svc-points" aria-label="What's included">
+                  {s.points?.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </TiltCard>
+            </Track>
+          ))}
+        </div>
+      </section>
+
+      <section className="svc-group" aria-label={SERVICE_GROUPS.beyond.label}>
+        <GroupHead {...SERVICE_GROUPS.beyond} />
+        <div className="svc-grid svc-more">
+          {BEYOND.map((s, i) => (
+            <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 3 })}>
+              <TiltCard className={s.href ? "is-link" : ""}>
+                <LineIcon name={s.icon} />
+                <div>
+                  <h3>
+                    {s.href ? (
+                      // the link covers the whole card (see .is-link in the CSS)
+                      <a href={s.href}>
+                        {s.title} <span aria-hidden>→</span>
+                      </a>
+                    ) : (
+                      s.title
+                    )}
+                  </h3>
                   <p>{s.text}</p>
                 </div>
               </TiltCard>

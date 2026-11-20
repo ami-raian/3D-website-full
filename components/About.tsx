@@ -2,39 +2,32 @@ import Counter from "./Counter";
 import Track from "./Track";
 import Hero3D from "./hero3d/Hero3D";
 import { vars } from "@/lib/css";
-import { SITE } from "@/lib/site";
+import { SITE, STATS } from "@/lib/site";
 
-const STATS = [
-  { to: 12, suffix: "+", label: "Years shipping software" },
-  { to: 140, suffix: "+", label: "Products launched" },
-  { to: 35, suffix: "", label: "Engineers and designers" },
-  { to: 98, suffix: "%", label: "Clients who come back" },
-];
-
-/** First screen: who we are, what we do, and the two things a visitor usually wants next. */
+/** First screen: what Ucchas does (Shopify first), proof in numbers, and the two next steps. */
 export default function About() {
   return (
     <Track name="about" id="about" className="about">
       <Hero3D />
       <div className="about-inner">
-        <p className="kicker">( {SITE.name} · Software engineering )</p>
+        <p className="kicker">( {SITE.name} · Shopify & e-commerce studio )</p>
 
         <h1 className="about-title">
-          <span>We engineer</span>
+          <span>Shopify, from</span>
+          <span>first sale</span>
           <span>
-            <em>software</em> that
+            to <em>scale.</em>
           </span>
-          <span>lasts.</span>
         </h1>
 
         <div className="about-foot">
           <p className="lead">
-            {SITE.name} is an independent software company. We build Shopify and e-commerce stores from A to Z, hire
-            and manage remote teams, and engineer the web, mobile and cloud software behind them.
+            {SITE.name} designs, builds and grows Shopify stores, from a first launch to Shopify Plus. We also build
+            custom e-commerce and web apps, and hire and manage remote developers for your team.
           </p>
           <div className="actions">
             <a className="btn" href="#contact">
-              <span>Start a project</span>
+              <span>Book a free strategy call</span>
               <b aria-hidden>→</b>
             </a>
             <a className="link-arrow" href="#projects">

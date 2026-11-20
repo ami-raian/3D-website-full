@@ -1,15 +1,17 @@
 import Track from "./Track";
 import { vars } from "@/lib/css";
 
+// *word* = highlighted
 const TEXT =
-  "Every product we ship is built to feel *light.* It opens in a *blink* on a mid-range phone, makes sense on day one and stays easy to change years later. No bloated stacks. No *black-box* code. Just careful engineering, honest design and the right few tools, so your software runs like *silk.*";
+  "Most agencies do a little of everything. We go deep on one: *Shopify.* Every store we launch, migrate or grow is built to load *fast,* sell *more* and stay easy to change, with senior people you can talk to *directly.*";
 
+/** The "why Ucchas" statement: words light up one by one as you scroll. */
 export default function Story() {
   const words = TEXT.split(" ");
   return (
     <Track mode="pin" name="story" className="story" style={vars({ "--n": words.length })}>
       <div className="story-sticky">
-        <p className="kicker">( Why it feels so light )</p>
+        <p className="kicker">( Why Ucchas )</p>
         <p className="story-text">
           {words.map((w, i) => {
             const hl = w.startsWith("*");
