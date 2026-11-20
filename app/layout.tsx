@@ -12,9 +12,9 @@ const serif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Ucchas | Shopify, e-commerce & web development",
+  title: "Ucchas | Software, Shopify & e-commerce development",
   description:
-    "Ucchas builds Shopify and e-commerce stores from A to Z, hires and manages remote teams, and engineers web, mobile and cloud software.",
+    "Ucchas is an IT company. We build Shopify and e-commerce stores, websites and apps, and hire remote developers and designers for your team.",
 };
 
 export const viewport: Viewport = {

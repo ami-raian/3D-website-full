@@ -465,6 +465,11 @@ em {
 
 /* ---------- about (first screen) ---------- */
 
+/* keeps a hyphenated word (e-commerce) on one line */
+.nowrap {
+  white-space: nowrap;
+}
+
 /* the 3D centrepiece (components/hero3d) sits behind the hero content on the right.
    It is absolutely positioned, so it never changes the layout, and it ignores the pointer
    so the buttons above it work as before (it follows the cursor through a window listener). */
@@ -608,14 +613,8 @@ em {
   color: transparent;
 }
 
-/* ---------- services (tilt cards) ---------- */
+/* ---------- tilt cards (hiring options) ---------- */
 
-.svc-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2vw, 1.75rem);
-  perspective: 1400px;
-}
 .tilt {
   --rx: 0deg;
   --ry: 0deg;
@@ -664,98 +663,578 @@ em {
 .tilt p {
   color: var(--muted);
 }
-/* service blocks (Shopify, e-commerce & remote teams, more): a small label, then the cards */
-.svc-group + .svc-group {
-  margin-top: clamp(2.5rem, 6vh, 4rem);
+/* ---------- services (bento) ---------- */
+
+/* main services big, the rest small; Remote hiring runs down the right */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(11rem, auto);
+  grid-template-areas:
+    "shopify shopify commerce commerce"
+    "shopify shopify web hiring"
+    "s1 s2 s3 hiring";
+  gap: clamp(0.8rem, 1.3vw, 1.1rem);
 }
-.svc-group-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 1.6rem;
-  margin-bottom: 1.4rem;
+.tile-shopify {
+  grid-area: shopify;
+  --accent: 126, 226, 168;
 }
-.svc-group-text {
-  max-width: 62ch;
-  font-size: 0.95rem;
-  color: var(--muted);
+.tile-commerce {
+  grid-area: commerce;
+  --accent: 255, 196, 138;
+}
+.tile-web {
+  grid-area: web;
+  --accent: 143, 211, 255;
+}
+.tile-hiring {
+  grid-area: hiring;
+  --accent: 255, 156, 207;
+}
+.tile-s1 {
+  grid-area: s1;
+}
+.tile-s2 {
+  grid-area: s2;
+}
+.tile-s3 {
+  grid-area: s3;
 }
 
-/* core services: large cards, three per row, each with a "what's included" list */
-.svc-core {
-  grid-template-columns: repeat(3, 1fr);
-}
-/* icon beside the title (not above it) keeps the cards short */
-.svc-head {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-bottom: 0.8rem;
-  padding-right: 2rem;
-}
-.svc-head .line-icon {
-  flex: none;
-}
-.svc-num {
-  position: absolute;
-  top: clamp(1.3rem, 1.8vw, 1.8rem);
-  right: clamp(1.3rem, 1.8vw, 1.8rem);
-}
-.tilt .svc-head h3 {
-  margin: 0;
-  font-size: clamp(1.15rem, 1.45vw, 1.45rem);
-}
-.svc-core .tilt > p {
-  max-width: 46ch;
-  font-size: 0.92rem;
-}
-.svc-points {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.3rem 1.6rem;
-  margin-top: 1rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--line);
-}
-.svc-points li {
+.tile {
   position: relative;
-  padding-left: 1.3rem;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  color: rgba(242, 240, 236, 0.85);
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  overflow: hidden;
+  padding: clamp(1.15rem, 1.6vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(var(--accent, 183, 156, 255), 0.11), transparent 60%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
+    rgba(12, 11, 20, 0.72);
 }
-.svc-points li::before {
+/* the border lights up near the pointer (Spotlight sets --mx / --my), with a soft glow inside */
+.tile::before,
+.tile::after {
   content: "";
   position: absolute;
-  top: 0.6em;
-  left: 0;
-  width: 0.7rem;
-  height: 1.5px;
-  border-radius: 2px;
-  background: var(--iri);
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.tile::before {
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(
+    260px circle at var(--mx, -600px) var(--my, -600px),
+    rgba(var(--accent, 183, 156, 255), 0.9),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.tile::after {
+  z-index: -1;
+  background: radial-gradient(
+    380px circle at var(--mx, -600px) var(--my, -600px),
+    rgba(var(--accent, 183, 156, 255), 0.07),
+    transparent 70%
+  );
 }
 
-/* more services: compact cards, icon beside the text */
-.svc-more .tilt {
+.tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.tile .line-icon {
+  --size: 38px;
+  padding: 8px;
+  border-color: rgba(var(--accent, 183, 156, 255), 0.3);
+  background: rgba(var(--accent, 183, 156, 255), 0.1);
+  stroke: rgb(var(--accent, 201, 184, 255));
+}
+.tile-badge {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(var(--accent), 0.3);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+.tile h3 {
+  margin: 1rem 0 0.45rem;
+  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  font-weight: var(--display);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.tile-shopify h3 {
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+}
+.tile p {
+  max-width: 42ch;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.tile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+.tile-tags li {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  color: rgba(242, 240, 236, 0.82);
+  background: rgba(255, 255, 255, 0.03);
+}
+@media (hover: hover) {
+  .tile.is-link:hover {
+    border-color: rgba(var(--accent), 0.45);
+  }
+}
+
+/* --- Shopify: a storefront that runs off the bottom of the tile --- */
+.art-store {
+  position: relative;
+  flex: 1;
+  min-height: 14rem;
+  margin-bottom: -2.2rem;
+}
+.mock {
+  position: absolute;
+  inset: 0 0 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: #0d0c16;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  transition: transform 0.6s var(--ease);
+}
+.mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.mock-bar i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+.mock-bar span {
+  margin-left: 0.6rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+}
+.mock-hero {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  align-items: start;
-  column-gap: 0.9rem;
-  padding: 1rem 1.1rem;
-  border-radius: 16px;
-}
-.svc-more .line-icon {
-  --size: 36px;
-  padding: 7px;
+  align-content: center;
+  gap: 0.35rem;
+  height: 5.2rem;
+  margin: 0.8rem;
+  padding: 0 1rem;
   border-radius: 10px;
+  background: linear-gradient(120deg, rgba(126, 226, 168, 0.38), rgba(143, 211, 255, 0.24) 50%, rgba(183, 156, 255, 0.32));
 }
-.svc-more .tilt h3 {
-  margin: 0.1rem 0 0.3rem;
-  font-size: clamp(1rem, 1.15vw, 1.1rem);
+.mock-hero b {
+  display: block;
+  width: 42%;
+  height: 0.45rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.8);
 }
-.svc-more p {
-  font-size: 0.84rem;
-  line-height: 1.45;
+.mock-hero b + b {
+  width: 28%;
+  opacity: 0.55;
+}
+.mock-hero em {
+  width: 3.6rem;
+  height: 1.1rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: #fff;
+}
+.mock-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin: 0 0.8rem;
+}
+.mock-item span {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: linear-gradient(160deg, rgba(255, 196, 138, 0.42), rgba(255, 156, 207, 0.18));
+}
+.mock-item:nth-child(2) span {
+  background: linear-gradient(160deg, rgba(143, 211, 255, 0.4), rgba(183, 156, 255, 0.16));
+}
+.mock-item:nth-child(3) span {
+  background: linear-gradient(160deg, rgba(126, 226, 168, 0.4), rgba(143, 211, 255, 0.14));
+}
+.mock-item:nth-child(4) span {
+  background: linear-gradient(160deg, rgba(183, 156, 255, 0.42), rgba(255, 156, 207, 0.16));
+}
+.mock-item b {
+  display: block;
+  width: 80%;
+  height: 0.3rem;
+  margin-top: 0.4rem;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.mock-item b + b {
+  width: 40%;
+  background: rgba(126, 226, 168, 0.55);
+}
+/* floating cards over the storefront */
+.art-stat,
+.art-toast {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(20, 18, 32, 0.88);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+.art-stat {
+  top: 2.6rem;
+  right: -0.4rem;
+  display: grid;
+  width: 9.5rem;
+  padding: 0.7rem 0.8rem 0.6rem;
+  border-radius: 12px;
+  transition: transform 0.6s var(--ease);
+}
+.art-stat small {
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.art-stat strong {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 1.05rem;
+}
+.art-stat svg {
+  width: 100%;
+  height: 1.6rem;
+}
+.art-stat path {
+  fill: none;
+  stroke: #7ee2a8;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.art-toast {
+  bottom: 3.4rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border-color: rgba(126, 226, 168, 0.35);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  animation: toast 6s var(--ease) infinite;
+}
+.art-toast i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #7ee2a8;
+}
+.art-toast strong {
+  color: #7ee2a8;
+}
+@keyframes toast {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  14%,
+  80% {
+    opacity: 1;
+    transform: none;
+  }
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (hover: hover) {
+  .tile-shopify:hover .mock {
+    transform: translateY(-6px);
+  }
+  .tile-shopify:hover .art-stat {
+    transform: translate(-4px, -10px);
+  }
+}
+
+/* --- E-commerce: text on the left, a live order feed on the right --- */
+.tile-commerce {
+  flex-direction: row;
+  align-items: stretch;
+}
+.tile-commerce .tile-text {
+  flex: 1 1 55%;
+}
+.art-feed {
+  position: relative;
+  flex: 1 1 45%;
+  min-height: 9rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(8, 8, 14, 0.6);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+}
+/* absolutely placed so its height doesn't stretch the tile; scrolls up through a doubled list */
+.feed {
+  position: absolute;
+  inset: 0 0.6rem auto;
+  padding-top: 0.6rem;
+  animation: feed 14s linear infinite;
+}
+@keyframes feed {
+  to {
+    transform: translateY(-50%);
+  }
+}
+.feed-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  font-size: 0.74rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+.feed-id {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+.feed-st {
+  justify-self: start;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.64rem;
+  font-weight: 600;
+}
+.st-paid {
+  color: #7ee2a8;
+  background: rgba(126, 226, 168, 0.12);
+}
+.st-shipped {
+  color: #8fd3ff;
+  background: rgba(143, 211, 255, 0.12);
+}
+.st-delivered {
+  color: #ffc48a;
+  background: rgba(255, 196, 138, 0.12);
+}
+.feed-amt {
+  font-weight: 600;
+}
+
+/* --- Web: a code window --- */
+.art-code {
+  margin-top: auto;
+  overflow: hidden;
+  padding: 0.65rem 0.85rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.8;
+  white-space: nowrap;
+  background: rgba(8, 8, 14, 0.7);
+}
+.code-bar {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.35rem;
+}
+.code-bar i {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+.c-t {
+  color: #8fd3ff;
+}
+.c-a {
+  color: #b79cff;
+}
+.c-s {
+  color: #ffc48a;
+}
+.caret {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.9rem;
+  margin-left: 0.2rem;
+  vertical-align: -0.15rem;
+  background: #8fd3ff;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- Remote hiring: a shortlist of candidates --- */
+.art-people {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.person {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.035);
+  transition: transform 0.5s var(--ease);
+  transition-delay: calc(var(--i) * 60ms);
+}
+@media (hover: hover) {
+  .tile-hiring:hover .person {
+    transform: translateX(-4px);
+  }
+}
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #0c0a14;
+  background: linear-gradient(135deg, #ffc48a, #ff9ccf);
+}
+.person:nth-child(2) .avatar {
+  background: linear-gradient(135deg, #8fd3ff, #b79cff);
+}
+.person:nth-child(3) .avatar {
+  background: linear-gradient(135deg, #7ee2a8, #8fd3ff);
+}
+.person-text {
+  display: grid;
+  min-width: 0;
+}
+.person-text b {
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+.person-text small {
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+.person-ok {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-left: auto;
+  border-radius: 50%;
+  background: rgba(95, 242, 168, 0.14)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.6L12 5.5' fill='none' stroke='%235ff2a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 70% no-repeat;
+}
+.people-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff9ccf;
+}
+.pulse {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #5ff2a8;
+  animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(95, 242, 168, 0.6);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.5rem rgba(95, 242, 168, 0);
+  }
+}
+
+/* tablets: two columns, Remote hiring still runs down the right */
+@media (max-width: 1080px) {
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "shopify shopify"
+      "commerce commerce"
+      "web hiring"
+      "s1 hiring"
+      "s2 s3";
+  }
+}
+
+/* phones: one column, main services first */
+@media (max-width: 600px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+    grid-template-areas: "shopify" "commerce" "web" "hiring" "s1" "s2" "s3";
+  }
+  .tile-commerce {
+    flex-direction: column;
+  }
+  .art-store {
+    min-height: 15rem;
+  }
+  .art-stat {
+    width: 8.4rem;
+  }
 }
 
 /* ---------- work (horizontal 3D gallery) ---------- */
@@ -1006,39 +1485,51 @@ em {
 }
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.8rem clamp(1.2rem, 2.4vw, 2.2rem);
 }
-.why-card {
+/* each reason sits under a thin line; its gradient stub stretches across on hover */
+.why-item {
   position: relative;
-  overflow: hidden;
-  padding: clamp(1.2rem, 1.8vw, 1.6rem);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
-    rgba(10, 10, 16, 0.55);
-  transition: border-color 0.4s;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
 }
-/* a thin gradient edge lights up along the top on hover */
-.why-card::before {
+.why-item::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto;
+  top: -1px;
+  left: 0;
+  width: 2.5rem;
   height: 1px;
   background: var(--iri);
-  opacity: 0;
-  transition: opacity 0.4s;
+  transition: width 0.6s var(--ease);
 }
 @media (hover: hover) {
-  .why-card:hover {
-    border-color: rgba(183, 156, 255, 0.35);
-  }
-  .why-card:hover::before {
-    opacity: 1;
+  .why-item:hover::before {
+    width: 100%;
   }
 }
-/* line icons in a soft tile (why cards, services) */
+.why-num {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: #b79cff;
+}
+.why-item h3 {
+  margin-bottom: 0.45rem;
+  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
+  font-weight: var(--display);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.why-item p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+/* line icons in a soft tile (service tiles) */
 .line-icon {
   flex: none;
   width: var(--size, 42px);
@@ -1053,23 +1544,8 @@ em {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.why-card .line-icon {
-  margin-bottom: 1rem;
-}
-.why-card h3 {
-  margin-bottom: 0.45rem;
-  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
-  font-weight: var(--display);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-.why-card p {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
 
-/* ---------- shared bits: stage labels, green check lists, whole-card links ---------- */
+/* ---------- shared bits: small labels, green check lists, whole-card links ---------- */
 
 .svc-phase {
   display: inline-block;
@@ -1079,13 +1555,6 @@ em {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #b79cff;
-}
-/* Shopify stages: two big cards per row, each list in two columns */
-.svc-grid.svc-core.svc-four {
-  grid-template-columns: repeat(2, 1fr);
-}
-.svc-four .svc-points {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .checks {
   display: grid;
@@ -1158,65 +1627,29 @@ em {
   font-weight: 600;
   background: rgba(255, 255, 255, 0.03);
 }
-/* the four steps, as one strip of panels */
-.hire-steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  margin-top: clamp(2rem, 5vh, 3rem);
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: var(--line);
-}
-.hire-steps li {
-  padding: clamp(1.1rem, 1.6vw, 1.5rem);
-  background: #0c0b14;
-}
-.hire-steps h3,
-.hire-list h3 {
-  font-size: 1.02rem;
-  font-weight: var(--display);
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-.hire-steps h3 {
-  margin: 0.5rem 0 0.35rem;
-}
-.hire-steps p {
-  font-size: 0.86rem;
-  color: var(--muted);
-}
-.hire-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.1fr;
-  align-items: start;
-  gap: clamp(1rem, 2vw, 1.6rem);
-  margin-top: clamp(1.6rem, 4vh, 2.4rem);
-}
-.hire-list .checks {
-  margin-top: 0.8rem;
-}
+/* the promises and the button, in one bar */
 .hire-cta {
-  display: grid;
-  justify-items: start;
-  gap: 1rem;
-  padding: clamp(1.2rem, 1.8vw, 1.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: clamp(1.6rem, 4vh, 2.4rem);
+  padding: clamp(1rem, 1.6vw, 1.3rem) clamp(1.1rem, 2vw, 1.6rem);
   border: 1px solid rgba(183, 156, 255, 0.25);
   border-radius: 20px;
   background:
-    radial-gradient(120% 120% at 100% 0%, rgba(183, 156, 255, 0.18), transparent 60%),
+    radial-gradient(120% 160% at 100% 0%, rgba(183, 156, 255, 0.16), transparent 60%),
     rgba(255, 255, 255, 0.03);
 }
-.hire-cta p {
-  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
-  font-weight: var(--display);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+.hire-cta .checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  margin: 0;
 }
 
-/* ---------- process + ways to work together ---------- */
+/* ---------- process ---------- */
 
 /* the steps sit on a line that fills with the brand gradient as you scroll down */
 .steps {
@@ -1279,74 +1712,6 @@ em {
   font-size: 0.88rem;
   color: var(--muted);
 }
-.plans {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.9rem, 1.6vw, 1.4rem);
-  margin-top: clamp(2.5rem, 6vh, 4rem);
-}
-.plan {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: clamp(1.3rem, 2vw, 1.7rem);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01)),
-    rgba(10, 10, 16, 0.6);
-  transition: border-color 0.4s;
-}
-@media (hover: hover) {
-  .plan:hover {
-    border-color: rgba(183, 156, 255, 0.35);
-  }
-}
-.plan h3 {
-  font-size: 1.1rem;
-  font-weight: var(--display);
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-}
-.plan-price {
-  font-size: clamp(1.4rem, 2vw, 1.9rem);
-  font-weight: var(--display);
-  letter-spacing: -0.03em;
-  color: transparent;
-  background: var(--iri);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.plan-price span {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.plan-note {
-  margin-top: -0.4rem;
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.plan > p:not(.plan-price, .plan-note) {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-.plan .checks {
-  flex: 1;
-  align-content: start;
-  margin-top: 0.2rem;
-}
-.plan .link-arrow {
-  align-self: flex-start;
-  margin-top: 0.4rem;
-}
-
 /* ---------- team ---------- */
 
 .team-grid {
@@ -1492,7 +1857,7 @@ em {
 }
 .faq-list {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 .faq-list details {
   border: 1px solid var(--line);
@@ -1512,8 +1877,8 @@ em {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.05rem 1.2rem;
-  font-size: 1rem;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.96rem;
   font-weight: 600;
   list-style: none;
   cursor: pointer;
@@ -1525,8 +1890,8 @@ em {
 .faq-list summary i {
   position: relative;
   flex: none;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border: 1px solid var(--line);
   border-radius: 50%;
 }
@@ -1550,8 +1915,8 @@ em {
 }
 .faq-list details p {
   max-width: 62ch;
-  padding: 0 1.2rem 1.15rem;
-  font-size: 0.93rem;
+  padding: 0 1.1rem 1rem;
+  font-size: 0.92rem;
   color: var(--muted);
 }
 /* smooth opening, in browsers that can animate <details> (others just open instantly) */
@@ -2124,18 +2489,8 @@ em {
 }
 
 @media (max-width: 900px) {
-  /* three large service cards no longer fit side by side: stack them, two-column lists */
-  .svc-grid.svc-core {
-    grid-template-columns: 1fr;
-  }
-  .svc-points {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .sec-head {
     grid-template-columns: 1fr;
-  }
-  .svc-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
   .stats {
     grid-template-columns: repeat(2, 1fr);
@@ -2184,8 +2539,6 @@ em {
 }
 
 @media (max-width: 600px) {
-  .svc-grid,
-  .svc-points,
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -2286,19 +2639,6 @@ em {
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .svc-grid.svc-core.svc-four,
-  .plans {
-    grid-template-columns: 1fr;
-  }
-  .hire-steps {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .hire-bottom {
-    grid-template-columns: 1fr 1fr;
-  }
-  .hire-cta {
-    grid-column: 1 / -1;
-  }
   /* the process line runs down the left side instead of across */
   .steps {
     grid-template-columns: 1fr;
@@ -2333,12 +2673,7 @@ em {
 @media (max-width: 600px) {
   .why-grid,
   .team-grid,
-  .hire-modes,
-  .hire-steps,
-  .hire-bottom {
-    grid-template-columns: 1fr;
-  }
-  .svc-four .svc-points {
+  .hire-modes {
     grid-template-columns: 1fr;
   }
   .faq-list summary {

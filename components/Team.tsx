@@ -23,7 +23,7 @@ export default function Team() {
           The people you&apos;ll <em>work with</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          A senior team that builds what it sells. You talk to the people making your store, not a chain of account
+          Engineers, designers and recruiters. You talk to the people building your product, not a chain of account
           managers.
         </p>
       </Track>

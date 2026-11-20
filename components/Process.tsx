@@ -1,11 +1,8 @@
 import Track from "./Track";
 import { vars } from "@/lib/css";
-import { ENGAGEMENTS, PROCESS } from "@/lib/site";
+import { PROCESS } from "@/lib/site";
 
-/**
- * How a project runs (five steps on a line that draws itself as you scroll), then the three
- * ways to work together, each with a starting price or "Custom quote".
- */
+/** How a project runs: five steps on a line that draws itself as you scroll. */
 export default function Process() {
   return (
     <Track name="process" id="process" className="section process">
@@ -15,7 +12,7 @@ export default function Process() {
           From first call to <em>launch</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          A clear plan, a fixed price and a working store you can click through every week, not a surprise at the end.
+          A clear plan, a fixed price and working software you can click through every week, not a surprise at the end.
         </p>
       </Track>
 
@@ -31,34 +28,6 @@ export default function Process() {
           </li>
         ))}
       </Track>
-
-      <div className="plans">
-        {ENGAGEMENTS.map((e, i) => (
-          <Track key={e.title} as="div" mode="enter" className="plan rise" style={vars({ "--i": i })}>
-            <h3>{e.title}</h3>
-            {/* with a price set: "from $X" and the basis underneath; without one: the basis and how it's quoted */}
-            <p className="plan-price">
-              {e.from ? (
-                <>
-                  <span>from</span> {e.from}
-                </>
-              ) : (
-                e.basis
-              )}
-            </p>
-            <p className="plan-note">{e.from ? e.basis : "Quoted after a free call"}</p>
-            <p>{e.text}</p>
-            <ul className="checks">
-              {e.points.map((p) => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
-            <a className="link-arrow" href="#contact">
-              Get a quote <span aria-hidden>→</span>
-            </a>
-          </Track>
-        ))}
-      </div>
     </Track>
   );
 }

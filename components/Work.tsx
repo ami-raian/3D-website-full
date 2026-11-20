@@ -22,7 +22,7 @@ type Project = {
   focus?: string;
 };
 
-// Sample case studies (Shopify work first): replace with your own projects (photo credits in assets/projects/CREDITS.md)
+// Sample case studies, a mix of the main services: replace with your own projects (photo credits in assets/projects/CREDITS.md)
 const PROJECTS: Project[] = [
   {
     name: "Prism",
@@ -34,27 +34,6 @@ const PROJECTS: Project[] = [
     image: prism,
     alt: "Clothing rails with neutral-toned garments in a bright studio",
     focus: "50% 70%",
-  },
-  {
-    name: "Monolith",
-    sector: "Wholesale · Shopify B2B",
-    year: "2025",
-    summary: "B2B wholesale on Shopify Plus, synced with the client’s ERP and warehouse so orders flow without re-typing.",
-    result: ["3×", "faster order processing"],
-    services: ["Shopify B2B", "Integrations"],
-    image: monolith,
-    alt: "A long warehouse aisle with tall shelves of cardboard boxes",
-    focus: "50% 60%",
-  },
-  {
-    name: "Drift",
-    sector: "Beauty · Shopify CRO",
-    year: "2024",
-    summary: "Speed work and a year of A/B tests on a direct-to-consumer Shopify store, measured every step.",
-    result: ["+27%", "conversion rate"],
-    services: ["CRO", "Speed"],
-    image: drift,
-    alt: "Performance charts on a laptop screen",
   },
   {
     name: "Aether",
@@ -78,6 +57,17 @@ const PROJECTS: Project[] = [
     focus: "78% 50%",
   },
   {
+    name: "Monolith",
+    sector: "Wholesale · B2B e-commerce",
+    year: "2025",
+    summary: "B2B wholesale on Shopify Plus, synced with the client’s ERP and warehouse so orders flow without re-typing.",
+    result: ["3×", "faster order processing"],
+    services: ["Shopify B2B", "Integrations"],
+    image: monolith,
+    alt: "A long warehouse aisle with tall shelves of cardboard boxes",
+    focus: "50% 60%",
+  },
+  {
     name: "Halo",
     sector: "Healthcare · Web app",
     year: "2025",
@@ -87,6 +77,16 @@ const PROJECTS: Project[] = [
     image: halo,
     alt: "A doctor typing on a keyboard, with a stethoscope on the desk",
     focus: "22% 50%",
+  },
+  {
+    name: "Drift",
+    sector: "Beauty · Shopify CRO",
+    year: "2024",
+    summary: "Speed work and a year of A/B tests on a direct-to-consumer Shopify store, measured every step.",
+    result: ["+27%", "conversion rate"],
+    services: ["CRO", "Speed"],
+    image: drift,
+    alt: "Performance charts on a laptop screen",
   },
 ];
 

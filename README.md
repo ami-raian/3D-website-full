@@ -1,8 +1,9 @@
 # Ucchas: company website
 
-Next.js 16 (App Router) + Lenis smooth scrolling. One page with section navigation: About, Services,
-Projects, Technologies and Contact, on a static gradient backdrop. Animations are scroll-driven
-CSS, with no animation library.
+Website for Ucchas, an IT company. Its main services are Shopify, e-commerce and remote hiring;
+it also builds websites, apps and custom software. Next.js 16 (App Router) + Lenis smooth scrolling. One page with section
+navigation, on a static gradient backdrop. Animations are scroll-driven CSS, with no animation
+library.
 
 ```bash
 npm install
@@ -14,15 +15,22 @@ npm run build && npm start
 
 | Section | File | Notes |
 | --- | --- | --- |
-| Navigation | `components/Nav.tsx` | Fixed bar with scroll progress and the current section underlined; full-screen menu below 900 px. |
-| About | `components/About.tsx`, `components/Story.tsx` | First screen with stats (`Counter.tsx`), then the word-by-word "Why it feels so light" statement. |
-| Hero 3D | `components/hero3d/*.jsx` | An exploded-view processor (circuit board, chrome core, glass top) on the right of the About screen. See below. |
-| Services | `components/Services.tsx` | Three blocks: "Shopify, A to Z" (setup, development, growth & care), "E-commerce & remote teams" (e-commerce, remote team management, remote hiring), then compact cards for everything else. All come from `SERVICES` in `lib/site.ts`: `group: "shopify"` or `group: "core"` puts a service in a block of large cards, no group makes it a compact card. |
-| Projects | `components/Work.tsx`, `assets/projects/` | Pinned, horizontally scrolling 3D gallery of case studies with photos. Edit `PROJECTS`; photo credits are in `assets/projects/CREDITS.md`. |
+| Navigation | `components/Nav.tsx` | Fixed bar with scroll progress, the current section underlined, and a blurred background once the page scrolls; full-screen menu below 1080 px. |
+| Hero | `components/About.tsx` | Headline, two buttons and stats (`Counter.tsx`). |
+| Hero 3D | `components/hero3d/*.jsx` | An exploded-view processor (circuit board, chrome core, glass top) on the right of the hero. See below. |
+| About & why | `components/Story.tsx`, `components/WhyUs.tsx` | Word-by-word "About Ucchas" statement, then four short reasons (`WHY`). |
+| Services | `components/Services.tsx`, `components/ServiceArt.tsx`, `components/Spotlight.tsx` | Bento grid from `SERVICES`. Services with `main` set (Shopify, e-commerce, web, remote hiring) get large tiles with a small animated mock-up (`ServiceArt.tsx`); the rest are compact tiles. Tile borders glow near the pointer (`Spotlight.tsx`). |
+| Work | `components/Work.tsx`, `assets/projects/` | Pinned, looping 3D gallery of case studies with photos. Edit `PROJECTS`; photo credits are in `assets/projects/CREDITS.md`. |
+| Testimonials | `components/Testimonials.tsx` | Hidden until `TESTIMONIALS` has real quotes. |
+| Hire talent | `components/Hiring.tsx` | Two ways to hire, the roles, and a call to action (`HIRING`). |
+| Process | `components/Process.tsx` | Five steps on a line that draws itself as you scroll (`PROCESS`). |
+| Team | `components/Team.tsx` | Role cards (`TEAM`); add a name, photo and LinkedIn to show a real person. |
 | Technologies | `components/Technologies.tsx`, `components/StackTabs.tsx` | Marquee (`Marquee.tsx`) that reacts to scroll speed, then tabs per area with logo tiles (logos from the `simple-icons` package). Edit `STACK`. |
-| Contact | `components/Contact.tsx`, `components/ContactForm.tsx`, `app/actions.ts` | Form handled by a Server Action, plus the footer bar. |
+| FAQ | `components/Faq.tsx` | Five questions (`FAQ`) in native `<details>` elements. |
+| Contact | `components/Contact.tsx`, `components/ContactForm.tsx`, `app/actions.ts` | Name, email and message, handled by a Server Action, plus the footer bar. |
 
-Company name, email, section list, services and budget ranges live in `lib/site.ts`.
+All text lives in `lib/site.ts`. Lines marked `// CONFIRM` are claims (numbers, timings,
+guarantees) to check before the site goes live.
 
 ## How it works
 
@@ -51,7 +59,7 @@ build asks visitors to email the address in `lib/site.ts` instead.
 
 - **Copy and company details**: `lib/site.ts`, plus the text inside each section component
 - **Colours**: `:root` and `.backdrop` in `app/globals.css`
-- **Project gallery speed**: `.work { height: 440vh }` in `globals.css`. Taller means slower.
+- **Project gallery speed**: the `.work` height in `globals.css`. Taller means slower.
 
 ## Hero 3D (components/hero3d)
 

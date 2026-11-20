@@ -1,90 +1,69 @@
 import LineIcon from "./LineIcon";
-import TiltCard from "./TiltCard";
+import ServiceArt from "./ServiceArt";
+import Spotlight from "./Spotlight";
 import Track from "./Track";
 import { vars } from "@/lib/css";
-import { SERVICE_GROUPS, SERVICES } from "@/lib/site";
+import { SERVICES } from "@/lib/site";
 
-const SHOPIFY = SERVICES.filter((s) => s.group === "shopify");
-const BEYOND = SERVICES.filter((s) => s.group === "beyond");
+// each tile's place in the bento grid: the main services by name, the others s1, s2, s3
+let small = 0;
+const TILES = SERVICES.map((s) => ({ ...s, area: s.main ?? `s${++small}` }));
 
-/** small label + one line above a block of cards */
-const GroupHead = ({ label, text }: { label: string; text?: string }) => (
-  <Track as="div" mode="enter" className="svc-group-head">
-    <p className="kicker rise">( {label} )</p>
-    {text && (
-      <p className="svc-group-text rise" style={vars({ "--i": 1 })}>
-        {text}
-      </p>
-    )}
-  </Track>
-);
-
-/** Shopify first (four stages, everything included), then the rest of what Ucchas does. */
+/**
+ * Services as a bento grid: the four main services (Shopify, e-commerce, web, remote hiring) get
+ * large tiles with a small product mock-up; the rest are compact tiles.
+ */
 export default function Services() {
   return (
     <Track name="services" id="services" className="section">
       <Track as="div" mode="enter" className="sec-head">
         <p className="kicker rise">( Services )</p>
         <h2 className="h2 rise" style={vars({ "--i": 1 })}>
-          Shopify, <em>A to Z</em>
+          What we <em>do</em>
         </h2>
         <p className="lead rise" style={vars({ "--i": 2 })}>
-          Everything your store needs, from the first theme to Shopify Plus, plus the custom e-commerce, web and people
-          behind it.
+          Shopify, e-commerce and remote hiring are our main work. We also design and build websites, apps and custom
+          software.
         </p>
       </Track>
 
-      <section className="svc-group" aria-label={SERVICE_GROUPS.shopify.label}>
-        <GroupHead {...SERVICE_GROUPS.shopify} />
-        <div className="svc-grid svc-core svc-four">
-          {SHOPIFY.map((s, i) => (
-            // each card tracks its own position, so a lower row reveals when it arrives, not with the first
-            <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 2 })}>
-              <TiltCard>
-                <span className="svc-phase">
-                  0{i + 1} · {s.phase}
-                </span>
-                <div className="svc-head">
-                  <LineIcon name={s.icon} />
-                  <h3>{s.title}</h3>
-                </div>
-                <p>{s.text}</p>
-                <ul className="svc-points" aria-label="What's included">
-                  {s.points?.map((p) => (
-                    <li key={p}>{p}</li>
+      <Spotlight className="bento">
+        {TILES.map((s, i) => (
+          <Track
+            key={s.title}
+            as="div"
+            mode="enter"
+            className={`tile tile-${s.area} rise${s.href ? " is-link" : ""}`}
+            style={vars({ "--i": i % 3 })}
+          >
+            <div className="tile-text">
+              <div className="tile-top">
+                <LineIcon name={s.icon} />
+                {s.main && <span className="tile-badge">Core service</span>}
+              </div>
+              <h3>
+                {s.href ? (
+                  // the link covers the whole tile (see .is-link in the CSS)
+                  <a href={s.href}>
+                    {s.title} <span aria-hidden>→</span>
+                  </a>
+                ) : (
+                  s.title
+                )}
+              </h3>
+              <p>{s.text}</p>
+              {s.tags && (
+                <ul className="tile-tags">
+                  {s.tags.map((t) => (
+                    <li key={t}>{t}</li>
                   ))}
                 </ul>
-              </TiltCard>
-            </Track>
-          ))}
-        </div>
-      </section>
-
-      <section className="svc-group" aria-label={SERVICE_GROUPS.beyond.label}>
-        <GroupHead {...SERVICE_GROUPS.beyond} />
-        <div className="svc-grid svc-more">
-          {BEYOND.map((s, i) => (
-            <Track key={s.title} as="div" mode="enter" className="rise rise-3d" style={vars({ "--i": i % 3 })}>
-              <TiltCard className={s.href ? "is-link" : ""}>
-                <LineIcon name={s.icon} />
-                <div>
-                  <h3>
-                    {s.href ? (
-                      // the link covers the whole card (see .is-link in the CSS)
-                      <a href={s.href}>
-                        {s.title} <span aria-hidden>→</span>
-                      </a>
-                    ) : (
-                      s.title
-                    )}
-                  </h3>
-                  <p>{s.text}</p>
-                </div>
-              </TiltCard>
-            </Track>
-          ))}
-        </div>
-      </section>
+              )}
+            </div>
+            {s.main && <ServiceArt kind={s.main} />}
+          </Track>
+        ))}
+      </Spotlight>
     </Track>
   );
 }

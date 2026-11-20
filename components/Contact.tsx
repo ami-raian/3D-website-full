@@ -11,10 +11,10 @@ export default function Contact() {
           <p className="kicker">( Contact )</p>
           <h2 className="cta-title">
             Let&apos;s talk about <br />
-            your <em>store.</em>
+            your <em>project.</em>
           </h2>
           <p className="lead">
-            Tell us about your store, your project or the role you need to fill. We&apos;ll come back with
+            Tell us about your project or the role you need to fill. We&apos;ll come back with
             questions, a rough plan and an honest estimate.
           </p>
           <dl className="contact-list">
