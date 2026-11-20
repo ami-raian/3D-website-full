@@ -11,7 +11,7 @@ export default function Story() {
   return (
     <Track mode="pin" name="story" className="story" style={vars({ "--n": words.length })}>
       <div className="story-sticky">
-        <p className="kicker">( About Ucchas )</p>
+        <h2 className="kicker kicker-wrap">About Ucchas</h2>
         <p className="story-text">
           {words.map((w, i) => {
             const hl = w.startsWith("*");

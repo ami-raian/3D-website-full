@@ -26,7 +26,7 @@ export default function Faq() {
         {FAQ.map((f, i) => (
           <details key={f.q} className="rise" style={vars({ "--i": Math.min(i, 4) })}>
             <summary>
-              <span>{f.q}</span>
+              <h3 className="faq-q">{f.q}</h3>
               <i aria-hidden />
             </summary>
             <p>{f.a}</p>

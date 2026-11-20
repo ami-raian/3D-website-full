@@ -55,6 +55,30 @@ CONTACT_WEBHOOK_TOKEN=optional-secret   # sent as "Authorization: Bearer ..."
 Without `CONTACT_WEBHOOK_URL`, `npm run dev` logs submissions to the terminal, and a production
 build asks visitors to email the address in `lib/site.ts` instead.
 
+## SEO
+
+Everything search engines and social networks read is set up; the settings live in `lib/seo.ts`.
+
+| What | Where |
+| --- | --- |
+| Title, description, keywords, canonical URL, Open Graph and X (Twitter) tags, robots rules | `metadata` in `app/layout.tsx`, text in `lib/seo.ts` |
+| Share image (1200×630, made at build time) | `app/opengraph-image.tsx` |
+| `/sitemap.xml` and `/robots.txt` | `app/sitemap.ts`, `app/robots.ts` |
+| Icons: favicon, SVG icon, Apple icon, app manifest | `app/favicon.ico`, `app/icon.svg`, `app/apple-icon.png`, `app/manifest.ts`, `public/icon-*.png` |
+| Structured data (Organization, WebSite, WebPage, services and FAQ) | `jsonLd()` in `lib/seo.ts`, added in `app/page.tsx` |
+| Logo for search results | `public/logo.png` |
+| 404 page (not indexed) | `app/not-found.tsx` |
+
+Before going live, set these where you deploy (on Vercel: Project Settings, Environment Variables):
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.com     # canonical URL, sitemap and share links
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=xxxxxxxx   # optional: the code from Google Search Console
+```
+
+Then add your social profiles to `SOCIAL_PROFILES` in `lib/seo.ts`, submit `/sitemap.xml` in Google
+Search Console, and check the page with Google's Rich Results Test.
+
 ## Customise
 
 - **Copy and company details**: `lib/site.ts`, plus the text inside each section component

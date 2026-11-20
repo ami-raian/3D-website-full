@@ -10,13 +10,15 @@ export default function About() {
     <Track name="about" id="about" className="about">
       <Hero3D />
       <div className="about-inner">
-        <p className="kicker">( {SITE.name} · IT & software company )</p>
-
-        <h1 className="about-title">
-          <span>Software,</span>
-          <span>stores & teams</span>
-          <span>
-            that <em>scale.</em>
+        {/* the main heading: what Ucchas is (small line), then the promise (big line) */}
+        <h1 className="about-h1">
+          {/* the {" "} spaces keep the words apart in the page text that search engines read */}
+          <span className="kicker kicker-wrap">{SITE.name} · Shopify, e-commerce & software company</span>{" "}
+          <span className="about-title">
+            <span>Software,</span> <span>stores & teams</span>{" "}
+            <span>
+              that <em>scale.</em>
+            </span>
           </span>
         </h1>
 

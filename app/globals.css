@@ -111,6 +111,7 @@ em {
 .kicker {
   font-family: var(--mono);
   font-size: 0.74rem;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
@@ -516,13 +517,24 @@ em {
 }
 
 /* sized by its content (not forced to a full screen), clear of the fixed nav */
-.about-inner {
+.about-inner,
+.about-h1 {
   display: flex;
   flex-direction: column;
   gap: clamp(1.2rem, 3vh, 2rem);
+}
+.about-inner {
   padding: calc(5rem + clamp(1.5rem, 7vh, 4.5rem)) var(--gutter) 0;
 }
+/* brackets drawn by CSS, so they aren't part of the heading's text */
+.kicker-wrap::before {
+  content: "( ";
+}
+.kicker-wrap::after {
+  content: " )";
+}
 .about-title {
+  display: block;
   font-size: clamp(2rem, min(5vw, 9.5svh), 5rem);
   font-weight: var(--display);
   line-height: 0.92;
@@ -1850,6 +1862,9 @@ em {
   list-style: none;
   cursor: pointer;
 }
+.faq-q {
+  font: inherit;
+}
 .faq-list summary::-webkit-details-marker {
   display: none;
 }
@@ -2382,6 +2397,18 @@ em {
   .to-top:hover {
     color: var(--fg);
   }
+}
+
+/* ---------- 404 page ---------- */
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.2rem;
+  min-height: 100svh;
+  padding: var(--space) var(--gutter);
 }
 
 /* ---------- keyframes ---------- */

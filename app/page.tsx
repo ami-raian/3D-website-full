@@ -11,6 +11,7 @@ import Team from "@/components/Team";
 import Technologies from "@/components/Technologies";
 import Testimonials from "@/components/Testimonials";
 import WhyUs from "@/components/WhyUs";
+import { jsonLd } from "@/lib/seo";
 import Work from "@/components/Work";
 
 /**
@@ -20,6 +21,11 @@ import Work from "@/components/Work";
 export default function Home() {
   return (
     <>
+      {/* structured data for search engines and AI assistants (see lib/seo.ts); "<" escaped so the JSON can't close the tag */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()).replace(/</g, "\\u003c") }}
+      />
       <div className="backdrop" aria-hidden />
       <SmoothScroll />
       <Nav />
